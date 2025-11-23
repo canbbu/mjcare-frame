@@ -1,0 +1,17 @@
+[build]
+  # 빌드 명령어 (정적 사이트이므로 빌드 불필요)
+  command = ""
+  # 배포할 디렉토리 (현재 디렉토리)
+  publish = "."
+
+# SPA 라우팅을 위한 리다이렉트 규칙
+# 모든 경로를 index.html로 리다이렉트하여 클라이언트 사이드 라우팅 지원
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[build.environment]
+  # Node.js 버전 (필요한 경우)
+  NODE_VERSION = "18"
+
