@@ -14,7 +14,12 @@
     <header>
         <div class="header-container">
             <a href="/" class="logo">MIJIN COSMETICS</a>
-            <nav>
+            <button type="button" class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-controls="siteNav" aria-expanded="false">
+                <span class="nav-toggle__bar"></span>
+                <span class="nav-toggle__bar"></span>
+                <span class="nav-toggle__bar"></span>
+            </button>
+            <nav id="siteNav" aria-label="주 메뉴">
                 <ul>
                     <li><a href="/about" data-i18n="nav.about">ABOUT US</a></li>
                     <li><a href="/business" data-i18n="nav.business">BUSINESS</a></li>
@@ -31,102 +36,191 @@
             </div>
         </div>
     </header>
+    <div class="nav-overlay" id="navOverlay" hidden></div>
 
-    <!-- Hero Slider -->
-    <div class="hero-slider">
-        <div class="hero-content">
-            <h1><strong data-i18n="hero.global">GLOBAL</strong></h1>
-            <h2><strong data-i18n="hero.companyName">MIJIN COSMETICS</strong></h2>
-            <p data-i18n="hero.description1">미진화장품은 시트 마스크팩 제조 및 판매,</p>
-            <p data-i18n="hero.description2">OEM/ODM 전문기업으로서 국내외 유통망을 통해</p>
-            <p data-i18n="hero.description3">전세계의 고객들에게 다가가고 있습니다.</p>
-        </div>
-    </div>
-
-    <!-- About Section -->
-    <section class="about-section">
-        <div class="section-content">
-            <h3 data-i18n="about.title1">최고의 아름다움을</h3>
-            <h3 data-i18n="about.title2">이끌어내는 미진화장품</h3>
-            <p data-i18n="about.subtitle">MIJIN COSMETICS brings out the best beauty</p>
-            <a href="/about" class="btn-more" data-i18n="about.more">more</a>
-        </div>
-    </section>
-
-    <!-- Solutions Section -->
-    <section class="solutions-section">
-        <div class="solutions-content">
-            <h3 data-i18n="solutions.title1">트렌드에 맞춘</h3>
-            <h3 data-i18n="solutions.title2">맞춤형 솔루션</h3>
-            <p data-i18n="solutions.subtitle">Customized solutions for trends</p>
-            <hr>
-            <div class="certification">
-                <strong>CPNP</strong> <span data-i18n="solutions.certification">인증 취득</span>
+    <main>
+        <!-- Hero -->
+        <section class="hero-section" id="hero">
+            <div class="hero-section__content">
+                <p class="hero-eyebrow">GLOBAL OEM · ODM</p>
+                <h1 data-i18n="hero.companyName">MIJIN COSMETICS</h1>
+                <p data-i18n="hero.description1">시트 마스크팩 제조 및 판매, 글로벌 유통망을 통한 맞춤형 솔루션.</p>
+                <p data-i18n="hero.description2">엄격한 품질관리 시스템과 다양한 브랜드 포트폴리오로 세계 고객과 만납니다.</p>
+                <div class="hero-actions">
+                    <a href="/about" class="btn btn-primary" data-i18n="hero.ctaAbout">회사 소개</a>
+                    <a href="/21" class="btn btn-outline" data-i18n="hero.ctaContact">CONTACT US</a>
+                </div>
+                <ul class="hero-meta">
+                    <li>
+                        <span>20+</span>
+                        <p>Years of OEM/ODM Expertise</p>
+                    </li>
+                    <li>
+                        <span>3</span>
+                        <p>Global Brands</p>
+                    </li>
+                    <li>
+                        <span>500M+</span>
+                        <p>Annual Sheet Masks</p>
+                    </li>
+                </ul>
             </div>
-            <hr>
-            <div class="certification">
-                <strong>CPNP</strong> <span data-i18n="solutions.certification">인증 취득</span>
+            <div class="hero-section__media">
+                <div class="media-placeholder" aria-hidden="true"></div>
+                <div class="hero highlight-card">
+                    <p>CPNP · FDA · ISO22716</p>
+                    <strong>Global Compliance</strong>
+                    <span>전문 인증을 통한 안정적인 글로벌 수출</span>
+                </div>
             </div>
-            <hr>
-            <div class="certification">
-                <strong>MIJIN COSMETICS</strong>
-            </div>
-            <hr>
-        </div>
-    </section>
+        </section>
 
-    <!-- Products Section -->
-    <section class="products-section">
-        <h2 class="section-title" data-i18n="products.title">Monthly product</h2>
-        <p class="section-subtitle" data-i18n="products.subtitle">수분크림을 듬뿍 바른 듯한 사용감의 크림 마스크</p>
-        <div class="products-grid" id="productsGrid" aria-live="polite">
-            <p class="loading-message" data-i18n="products.loading">제품 정보를 불러오는 중입니다...</p>
-        </div>
-        <div class="product-actions">
-            <button type="button" class="product-admin-toggle" id="productModalOpen" data-i18n="products.addManage">제품 추가 / 관리</button>
-        </div>
-        <div class="product-modal" id="productModal" aria-hidden="true" role="dialog" aria-modal="true">
-            <div class="product-modal__overlay" id="productModalOverlay"></div>
-            <div class="product-modal__content" role="document">
-                <button type="button" class="product-modal__close" id="productModalClose" data-i18n="products.modalClose" aria-label="">&times;</button>
-                <div class="product-modal__body">
-                    <div class="product-upload">
-                        <h3 data-i18n="products.addImage">제품 이미지 추가</h3>
-                        <form id="productUploadForm">
-                            <label>
-                                <span data-i18n="products.productImage">제품 이미지</span>
-                                <input type="file" id="productFile" accept="image/*" required>
-                            </label>
-                            <label>
-                                <span data-i18n="products.productName">제품명 (선택)</span>
-                                <input type="text" id="productTitle" data-i18n-placeholder="products.productNamePlaceholder" placeholder="예: 신제품 마스크팩">
-                            </label>
-                            <label>
-                                <span data-i18n="products.badge">배지 (선택)</span>
-                                <input type="text" id="productBadge" data-i18n-placeholder="products.badgePlaceholder" placeholder="예: BEST">
-                            </label>
-                            <label>
-                                <span data-i18n="products.price">가격 (선택)</span>
-                                <input type="text" id="productPrice" data-i18n-placeholder="products.pricePlaceholder" placeholder="예: 2,000원">
-                            </label>
-                            <label>
-                                <span data-i18n="products.subtitleText">서브텍스트 (선택)</span>
-                                <input type="text" id="productSubtitle" data-i18n-placeholder="products.subtitlePlaceholder" placeholder="예: TIME SALE">
-                            </label>
-                            <button type="submit" id="uploadButton" data-i18n="products.addButton">이미지 추가</button>
-                        </form>
-                        <p style="margin-top: 12px; font-size: 13px; color: #777;" data-i18n="products.uploadNote">※ 파일명은 자동으로 카드 제목에 반영되며, 입력한 상세 정보는 이번 세션에서만 표시됩니다.</p>
-                    </div>
-                    <div class="product-admin">
-                        <h3 data-i18n="products.manage">제품 관리 (수정 / 삭제)</h3>
-                        <div class="product-admin-list" id="productAdminList">
-                            <p class="loading-message" data-i18n="products.loading">제품 정보를 불러오는 중입니다...</p>
+        <!-- Intro -->
+        <section class="intro-section" id="about">
+            <div class="intro-grid">
+                <article class="intro-card">
+                    <p class="eyebrow">ABOUT US</p>
+                    <h2>최고의 아름다움을 이끌어내는 미진화장품</h2>
+                    <p>1988년 설립 이래 R&amp;D와 생산설비를 동시에 갖춘 시트 마스크 전문기업으로 성장했습니다. OEM/ODM 파트너로서 브랜딩 단계부터 패키징까지 원스톱 솔루션을 제공합니다.</p>
+                    <ul>
+                        <li>구미, 경산 2개 생산 캠퍼스</li>
+                        <li>연구·임상·품질관리 전담 조직 보유</li>
+                        <li>글로벌 유통사와의 장기 파트너십</li>
+                    </ul>
+                </article>
+                <article class="intro-card intro-card--accent">
+                    <p class="eyebrow">WHAT WE DO</p>
+                    <h3>Business Area</h3>
+                    <ol>
+                        <li>OEM / ODM Project Planning</li>
+                        <li>Sheet Mask · Skincare Manufacturing</li>
+                        <li>Brand Launch &amp; Market Entry Support</li>
+                    </ol>
+                    <a href="/business" class="btn-link" data-i18n="nav.business">BUSINESS</a>
+                </article>
+                <figure class="intro-figure">
+                    <div class="media-placeholder" aria-hidden="true"></div>
+                    <figcaption>Smart Factory · 자동 생산 라인</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <!-- Certification / Solutions -->
+        <section class="cert-section" id="solutions">
+            <header>
+                <p class="eyebrow">SOLUTIONS</p>
+                <h2>트렌드에 맞춘 맞춤형 솔루션</h2>
+                <p>다양한 인증 취득과 데이터 기반 기획력으로 빠르게 변화하는 글로벌 뷰티 시장을 선도합니다.</p>
+            </header>
+            <div class="cert-grid">
+                <article class="cert-card">
+                    <span>01</span>
+                    <h3>CPNP 인증 취득</h3>
+                    <p>유럽 화장품 인증을 완료하여 안정적인 제품 수출 기반 확보.</p>
+                </article>
+                <article class="cert-card">
+                    <span>02</span>
+                    <h3>글로벌 R&amp;D 네트워크</h3>
+                    <p>소재 개발부터 처방 설계까지 고객 맞춤형 연구 진행.</p>
+                </article>
+                <article class="cert-card">
+                    <span>03</span>
+                    <h3>스마트 생산 시스템</h3>
+                    <p>실시간 공정 모니터링과 자동화 설비로 품질 편차 최소화.</p>
+                </article>
+                <article class="cert-card">
+                    <span>04</span>
+                    <h3>품질관리 프로토콜</h3>
+                    <p>ISO22716, CGMP, FDA 등 복수 인증을 바탕으로 글로벌 기준 충족.</p>
+                </article>
+            </div>
+        </section>
+
+        <!-- Site map style navigation -->
+        <section class="business-nav-section">
+            <div class="business-nav">
+                <p>MIJIN COSMETICS</p>
+                <ul>
+                    <li><a href="/">HOME</a></li>
+                    <li><a href="/about">ABOUT US</a></li>
+                    <li><a href="/business">BUSINESS</a></li>
+                    <li><a href="/19">PRODUCTION FACILITY</a></li>
+                    <li><a href="/20">BRAND</a></li>
+                    <li><a href="/21">CONTACT US</a></li>
+                    <li><a href="https://mjcareshop.com/main/main.html" target="_blank" rel="noopener">SHOP</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products-section" id="products">
+            <header class="products-header">
+                <p class="eyebrow" data-i18n="products.monthly">Monthly Product</p>
+                <h2 data-i18n="products.title">Monthly product</h2>
+                <p class="section-subtitle" data-i18n="products.subtitle">수분크림을 듬뿍 바른 듯한 사용감의 크림 마스크</p>
+            </header>
+            <div class="products-grid" id="productsGrid" aria-live="polite">
+                <p class="loading-message" data-i18n="products.loading">제품 정보를 불러오는 중입니다...</p>
+            </div>
+            <div class="product-actions">
+                <button type="button" class="product-admin-toggle" id="productModalOpen" data-i18n="products.addManage">제품 추가 / 관리</button>
+            </div>
+            <div class="product-modal" id="productModal" aria-hidden="true" role="dialog" aria-modal="true">
+                <div class="product-modal__overlay" id="productModalOverlay"></div>
+                <div class="product-modal__content" role="document">
+                    <button type="button" class="product-modal__close" id="productModalClose" data-i18n="products.modalClose" aria-label="">&times;</button>
+                    <div class="product-modal__body">
+                        <div class="product-upload">
+                            <h3 data-i18n="products.addImage">제품 이미지 추가</h3>
+                            <form id="productUploadForm">
+                                <label>
+                                    <span data-i18n="products.productImage">제품 이미지</span>
+                                    <input type="file" id="productFile" accept="image/*" required>
+                                </label>
+                                <label>
+                                    <span data-i18n="products.productName">제품명 (선택)</span>
+                                    <input type="text" id="productTitle" data-i18n-placeholder="products.productNamePlaceholder" placeholder="예: 신제품 마스크팩">
+                                </label>
+                                <label>
+                                    <span data-i18n="products.badge">배지 (선택)</span>
+                                    <input type="text" id="productBadge" data-i18n-placeholder="products.badgePlaceholder" placeholder="예: BEST">
+                                </label>
+                                <label>
+                                    <span data-i18n="products.price">가격 (선택)</span>
+                                    <input type="text" id="productPrice" data-i18n-placeholder="products.pricePlaceholder" placeholder="예: 2,000원">
+                                </label>
+                                <label>
+                                    <span data-i18n="products.subtitleText">서브텍스트 (선택)</span>
+                                    <input type="text" id="productSubtitle" data-i18n-placeholder="products.subtitlePlaceholder" placeholder="예: TIME SALE">
+                                </label>
+                                <button type="submit" id="uploadButton" data-i18n="products.addButton">이미지 추가</button>
+                            </form>
+                            <p class="upload-note" data-i18n="products.uploadNote">※ 파일명은 자동으로 카드 제목에 반영되며, 입력한 상세 정보는 이번 세션에서만 표시됩니다.</p>
+                        </div>
+                        <div class="product-admin">
+                            <h3 data-i18n="products.manage">제품 관리 (수정 / 삭제)</h3>
+                            <div class="product-admin-list" id="productAdminList">
+                                <p class="loading-message" data-i18n="products.loading">제품 정보를 불러오는 중입니다...</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- Contact Banner -->
+        <section class="cs-banner">
+            <div class="cs-banner__content">
+                <p class="eyebrow">CS CENTER</p>
+                <h2>054.461.8081</h2>
+                <p>평일 09:00 - 18:00 · 점심 13:00 - 14:00 · 토·일·공휴일 휴무</p>
+            </div>
+            <div class="cs-banner__actions">
+                <a href="/21" class="btn btn-primary">문의하기</a>
+                <a href="mailto:mijin_kor@mjcare.co.kr" class="btn btn-outline">mijin_kor@mjcare.co.kr</a>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer>
@@ -181,6 +275,7 @@
     <script src="i18n/translations.js"></script>
     <script src="js/i18n.js"></script>
     <script src="js/products.js"></script>
+    <script src="js/nav.js"></script>
     <script>
         // Placeholder 업데이트를 위한 추가 스크립트
         (function() {
