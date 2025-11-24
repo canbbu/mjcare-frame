@@ -79,10 +79,9 @@
             });
 
         if (error) {
-            console.warn('Supabase 로드 실패 (CORS 또는 네트워크 문제). 샘플 데이터를 표시합니다.', error);
-            // 에러 발생 시 샘플 데이터 표시
-            renderProducts(getSampleProducts());
-            renderAdminList(getSampleProducts());
+            console.warn('Supabase 로드 실패 (CORS 또는 네트워크 문제).', error);
+            setStatus(t('products.noProducts'));
+            renderAdminList([]);
             return;
         }
 
@@ -180,108 +179,89 @@
     function renderAdminList(products) {
         if (!productAdminList) return;
 
-        // ... existing code ...
-    }
-
-    /**
-     * CORS 에러 시 보여줄 샘플 데이터
-     */
-    function getSampleProducts() {
-        const lang = window.I18n ? window.I18n.currentLang : 'ko';
-        
-        if (lang === 'en') {
-            return [
-                {
-                    fileName: 'sample-1.jpg',
-                    title: 'Daily Fresh Garden Mask (Pearl)',
-                    badge: 'BEST',
-                    price: '$2.00',
-                    subtitle: 'TIME SALE',
-                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+1',
-                    meta: {}
-                },
-                {
-                    fileName: 'sample-2.jpg',
-                    title: 'SKIN PLANET Fresh Garden (Royal Jelly)',
-                    badge: 'NEW',
-                    price: '$2.00',
-                    subtitle: '',
-                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+2',
-                    meta: {}
-                },
-                {
-                    fileName: 'sample-3.jpg',
-                    title: 'MJCARE Sheet Mask (Aloe)',
-                    badge: 'HOT',
-                    price: '$1.50',
-                    subtitle: 'Sold Out',
-                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+3',
-                    meta: {}
-                }
-            ];
-        } else if (lang === 'ja') {
-            return [
-                {
-                    fileName: 'sample-1.jpg',
-                    title: 'デイリーフレッシュガーデンマスク (真珠)',
-                    badge: 'BEST',
-                    price: '200円',
-                    subtitle: 'TIME SALE',
-                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+1',
-                    meta: {}
-                },
-                {
-                    fileName: 'sample-2.jpg',
-                    title: 'SKIN PLANET フレッシュガーデン (ローヤルゼリー)',
-                    badge: 'NEW',
-                    price: '200円',
-                    subtitle: '',
-                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+2',
-                    meta: {}
-                },
-                {
-                    fileName: 'sample-3.jpg',
-                    title: 'MJCARE シートマスク (アロエ)',
-                    badge: 'HOT',
-                    price: '150円',
-                    subtitle: 'Sold Out',
-                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+3',
-                    meta: {}
-                }
-            ];
+        if (!products.length) {
+            productAdminList.innerHTML = `<p class="loading-message">${t('products.noProducts')}</p>`;
+            return;
         }
 
-        // Default (Korean)
-        return [
-            {
-                fileName: 'sample-1.jpg',
-                title: '데일리 프레쉬가든 마스크 (진주)',
-                badge: 'BEST',
-                price: '2,000원',
-                subtitle: 'TIME SALE',
-                imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+1',
-                meta: {}
-            },
-            {
-                fileName: 'sample-2.jpg',
-                title: 'SKIN PLANET 프레쉬가든 (로얄젤리)',
-                badge: 'NEW',
-                price: '2,000원',
-                subtitle: '',
-                imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+2',
-                meta: {}
-            },
-            {
-                fileName: 'sample-3.jpg',
-                title: 'MJCARE 시트 마스크 (알로에)',
-                badge: 'HOT',
-                price: '1,500원',
-                subtitle: 'Sold Out',
-                imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+3',
-                meta: {}
-            }
-        ];
+        productAdminList.innerHTML = '';
+
+        products.forEach((product) => {
+            const row = document.createElement('div');
+            row.className = 'product-admin-row';
+
+            const nameLabel = document.createElement('strong');
+            nameLabel.textContent = product.fileName;
+            row.appendChild(nameLabel);
+
+            const titleField = createMetaInput(product.meta?.title || '', t('products.metaTitle'));
+            const badgeField = createMetaInput(product.meta?.badge || '', t('products.metaBadge'));
+            const priceField = createMetaInput(product.meta?.price || '', t('products.metaPrice'));
+            const subtitleField = createMetaInput(product.meta?.subtitle || '', t('products.metaSubtitle'));
+
+            row.appendChild(titleField);
+            row.appendChild(badgeField);
+            row.appendChild(priceField);
+            row.appendChild(subtitleField);
+
+            const saveButton = document.createElement('button');
+            saveButton.type = 'button';
+            saveButton.className = 'btn-save-meta';
+            saveButton.textContent = t('products.saveMeta');
+            saveButton.addEventListener('click', async () => {
+                const meta = {};
+                if (titleField.value.trim()) meta.title = titleField.value.trim();
+                if (badgeField.value.trim()) meta.badge = badgeField.value.trim();
+                if (priceField.value.trim()) meta.price = priceField.value.trim();
+                if (subtitleField.value.trim()) meta.subtitle = subtitleField.value.trim();
+
+                if (Object.keys(meta).length === 0) {
+                    delete PRODUCT_METADATA[product.fileName];
+                } else {
+                    PRODUCT_METADATA[product.fileName] = meta;
+                }
+
+                saveStoredMetadata();
+                alert(t('products.metaSaved'));
+                await loadProducts();
+            });
+
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'btn-delete';
+            deleteButton.textContent = t('products.delete');
+            deleteButton.addEventListener('click', async () => {
+                const confirmed = window.confirm(t('products.deleteConfirm'));
+                if (!confirmed) return;
+
+                toggleRowButtons(deleteButton, saveButton, true);
+
+                const filePath = SUPABASE_FOLDER ? `${SUPABASE_FOLDER}/${product.fileName}` : product.fileName;
+                const { error } = await supabaseClient
+                    .storage
+                    .from(SUPABASE_BUCKET)
+                    .remove([filePath]);
+
+                if (error) {
+                    console.error(error);
+                    alert(t('products.deleteFailed'));
+                    toggleRowButtons(deleteButton, saveButton, false);
+                    return;
+                }
+
+                delete PRODUCT_METADATA[product.fileName];
+                saveStoredMetadata();
+                alert(t('products.deleteSuccess'));
+                toggleRowButtons(deleteButton, saveButton, false);
+                await loadProducts();
+            });
+
+            row.appendChild(saveButton);
+            row.appendChild(deleteButton);
+            productAdminList.appendChild(row);
+        });
     }
+
 
     function createMetaInput(value, placeholder) {
         const input = document.createElement('input');
