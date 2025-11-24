@@ -21,17 +21,26 @@
         const OPEN_CLASS = 'nav-open';
         const BREAKPOINT = 992; // px
 
+        function t(key) {
+            return (window.I18n && window.I18n.t) ? window.I18n.t(key) : key;
+        }
+
+        function syncAriaLabel() {
+            const key = document.body.classList.contains(OPEN_CLASS) ? 'nav.menuClose' : 'nav.menuOpen';
+            navToggle.setAttribute('aria-label', t(key));
+        }
+
         function openNav() {
             document.body.classList.add(OPEN_CLASS);
             navToggle.setAttribute('aria-expanded', 'true');
-            navToggle.setAttribute('aria-label', '메뉴 닫기');
+            navToggle.setAttribute('aria-label', t('nav.menuClose'));
             navOverlay.hidden = false;
         }
 
         function closeNav() {
             document.body.classList.remove(OPEN_CLASS);
             navToggle.setAttribute('aria-expanded', 'false');
-            navToggle.setAttribute('aria-label', '메뉴 열기');
+            navToggle.setAttribute('aria-label', t('nav.menuOpen'));
             navOverlay.hidden = true;
         }
 
@@ -42,6 +51,8 @@
                 openNav();
             }
         }
+
+        navToggle.setAttribute('aria-label', t('nav.menuOpen'));
 
         navToggle.addEventListener('click', toggleNav);
         navOverlay.addEventListener('click', closeNav);
@@ -57,6 +68,8 @@
                 closeNav();
             }
         });
+
+        window.addEventListener('languageChanged', syncAriaLabel);
     });
 })();
 

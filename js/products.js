@@ -45,6 +45,11 @@
     // 초기화
     init();
 
+    // 언어 변경 감지
+    window.addEventListener('languageChanged', () => {
+        loadProducts();
+    });
+
     function init() {
         loadProducts();
         setupUploadForm();
@@ -182,6 +187,71 @@
      * CORS 에러 시 보여줄 샘플 데이터
      */
     function getSampleProducts() {
+        const lang = window.I18n ? window.I18n.currentLang : 'ko';
+        
+        if (lang === 'en') {
+            return [
+                {
+                    fileName: 'sample-1.jpg',
+                    title: 'Daily Fresh Garden Mask (Pearl)',
+                    badge: 'BEST',
+                    price: '$2.00',
+                    subtitle: 'TIME SALE',
+                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+1',
+                    meta: {}
+                },
+                {
+                    fileName: 'sample-2.jpg',
+                    title: 'SKIN PLANET Fresh Garden (Royal Jelly)',
+                    badge: 'NEW',
+                    price: '$2.00',
+                    subtitle: '',
+                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+2',
+                    meta: {}
+                },
+                {
+                    fileName: 'sample-3.jpg',
+                    title: 'MJCARE Sheet Mask (Aloe)',
+                    badge: 'HOT',
+                    price: '$1.50',
+                    subtitle: 'Sold Out',
+                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+3',
+                    meta: {}
+                }
+            ];
+        } else if (lang === 'ja') {
+            return [
+                {
+                    fileName: 'sample-1.jpg',
+                    title: 'デイリーフレッシュガーデンマスク (真珠)',
+                    badge: 'BEST',
+                    price: '200円',
+                    subtitle: 'TIME SALE',
+                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+1',
+                    meta: {}
+                },
+                {
+                    fileName: 'sample-2.jpg',
+                    title: 'SKIN PLANET フレッシュガーデン (ローヤルゼリー)',
+                    badge: 'NEW',
+                    price: '200円',
+                    subtitle: '',
+                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+2',
+                    meta: {}
+                },
+                {
+                    fileName: 'sample-3.jpg',
+                    title: 'MJCARE シートマスク (アロエ)',
+                    badge: 'HOT',
+                    price: '150円',
+                    subtitle: 'Sold Out',
+                    imageUrl: 'https://via.placeholder.com/300x300?text=Sample+Product+3',
+                    meta: {}
+                }
+            ];
+        }
+
+        // Default (Korean)
         return [
             {
                 fileName: 'sample-1.jpg',

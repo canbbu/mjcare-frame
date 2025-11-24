@@ -11,7 +11,9 @@ const TRANSLATIONS = {
             production: 'PRODUCTION FACILITY',
             brand: 'BRAND',
             contact: 'CONTACT US',
-            shop: 'SHOP'
+            shop: 'SHOP',
+            menuOpen: '메뉴 열기',
+            menuClose: '메뉴 닫기'
         },
         // 히어로 섹션
         hero: {
@@ -19,7 +21,22 @@ const TRANSLATIONS = {
             companyName: 'MIJIN COSMETICS',
             description1: '미진화장품은 시트 마스크팩 제조 및 판매,',
             description2: 'OEM/ODM 전문기업으로서 국내외 유통망을 통해',
-            description3: '전세계의 고객들에게 다가가고 있습니다.'
+            description3: '전세계의 고객들에게 다가가고 있습니다.',
+            highlightDescription: '전문 인증을 통한 안정적인 글로벌 수출'
+        },
+        intro: {
+            eyebrow: 'ABOUT US',
+            title: '최고의 아름다움을 이끌어내는 미진화장품',
+            description: '1988년 설립 이래 R&D와 생산설비를 동시에 갖춘 시트 마스크 전문기업으로 성장했습니다. OEM/ODM 파트너로서 브랜딩 단계부터 패키징까지 원스톱 솔루션을 제공합니다.',
+            listCampus: '구미, 경산 2개 생산 캠퍼스',
+            listResearch: '연구·임상·품질관리 전담 조직 보유',
+            listPartners: '글로벌 유통사와의 장기 파트너십',
+            accentEyebrow: 'WHAT WE DO',
+            accentTitle: 'Business Area',
+            accentList1: 'OEM / ODM Project Planning',
+            accentList2: 'Sheet Mask · Skincare Manufacturing',
+            accentList3: 'Brand Launch & Market Entry Support',
+            figureCaption: 'Smart Factory · 자동 생산 라인'
         },
         // About 섹션
         about: {
@@ -34,6 +51,19 @@ const TRANSLATIONS = {
             title2: '맞춤형 솔루션',
             subtitle: 'Customized solutions for trends',
             certification: '인증 취득'
+        },
+        cert: {
+            eyebrow: 'SOLUTIONS',
+            title: '트렌드에 맞춘 맞춤형 솔루션',
+            description: '다양한 인증 취득과 데이터 기반 기획력으로 빠르게 변화하는 글로벌 뷰티 시장을 선도합니다.',
+            card1Title: 'CPNP 인증 취득',
+            card1Body: '유럽 화장품 인증을 완료하여 안정적인 제품 수출 기반 확보.',
+            card2Title: '글로벌 R&D 네트워크',
+            card2Body: '소재 개발부터 처방 설계까지 고객 맞춤형 연구 진행.',
+            card3Title: '스마트 생산 시스템',
+            card3Body: '실시간 공정 모니터링과 자동화 설비로 품질 편차 최소화.',
+            card4Title: '품질관리 프로토콜',
+            card4Body: 'ISO22716, CGMP, FDA 등 복수 인증을 바탕으로 글로벌 기준 충족.'
         },
         // Products 섹션
         products: {
@@ -75,6 +105,12 @@ const TRANSLATIONS = {
             processing: '처리 중...',
             modalClose: '제품 관리 팝업 닫기'
         },
+        cs: {
+            eyebrow: 'CS CENTER',
+            phone: '054.461.8081',
+            description: '평일 09:00 - 18:00 · 점심 13:00 - 14:00 · 토·일·공휴일 휴무',
+            ctaContact: '문의하기'
+        },
         // Footer
         footer: {
             companyInfo: '회사 정보',
@@ -111,14 +147,31 @@ const TRANSLATIONS = {
             production: 'PRODUCTION FACILITY',
             brand: 'BRAND',
             contact: 'CONTACT US',
-            shop: 'SHOP'
+            shop: 'SHOP',
+            menuOpen: 'メニューを開く',
+            menuClose: 'メニューを閉じる'
         },
         hero: {
             global: 'GLOBAL',
             companyName: 'MIJIN COSMETICS',
             description1: 'ミジン化粧品はシートマスクパックの製造・販売、',
             description2: 'OEM/ODM専門企業として国内外の流通網を通じて',
-            description3: '世界中のお客様にアプローチしています。'
+            description3: '世界中のお客様にアプローチしています。',
+            highlightDescription: '専門認証を通じた安定的なグローバル輸出'
+        },
+        intro: {
+            eyebrow: 'ABOUT US',
+            title: '最高の美しさを引き出すミジン化粧品',
+            description: '1988年の設立以来、R&Dと生産設備を兼ね備えたシートマスク専門企業として成長しました。OEM/ODMパートナーとして、ブランディングからパッケージングまでワンストップソリューションを提供します。',
+            listCampus: '亀尾・慶山の2つの生産キャンパス',
+            listResearch: '研究・臨床・品質管理の専門組織を保有',
+            listPartners: 'グローバル流通企業との長期パートナーシップ',
+            accentEyebrow: 'WHAT WE DO',
+            accentTitle: 'Business Area',
+            accentList1: 'OEM / ODMプロジェクト企画',
+            accentList2: 'シートマスク・スキンケア製造',
+            accentList3: 'ブランドローンチと市場参入支援',
+            figureCaption: 'スマートファクトリー・自動生産ライン'
         },
         about: {
             title1: '最高の美しさを',
@@ -131,6 +184,19 @@ const TRANSLATIONS = {
             title2: 'カスタマイズソリューション',
             subtitle: 'Customized solutions for trends',
             certification: '認証取得'
+        },
+        cert: {
+            eyebrow: 'SOLUTIONS',
+            title: 'トレンドに合わせたカスタマイズソリューション',
+            description: '多様な認証取得とデータに基づく企画力で、変化の激しいグローバルビューティ市場をリードします。',
+            card1Title: 'CPNP認証取得',
+            card1Body: '欧州化粧品認証を完了し、安定した製品輸出基盤を確保。',
+            card2Title: 'グローバルR&Dネットワーク',
+            card2Body: '素材開発から処方設計まで、顧客に合わせた研究を実施。',
+            card3Title: 'スマート生産システム',
+            card3Body: 'リアルタイム工程モニタリングと自動化設備で品質ばらつきを最小化。',
+            card4Title: '品質管理プロトコル',
+            card4Body: 'ISO22716、CGMP、FDAなど複数の認証を基にグローバル基準に対応。'
         },
         products: {
             title: 'Monthly product',
@@ -171,6 +237,12 @@ const TRANSLATIONS = {
             processing: '処理中...',
             modalClose: '製品管理ポップアップを閉じる'
         },
+        cs: {
+            eyebrow: 'CS CENTER',
+            phone: '054.461.8081',
+            description: '平日 09:00 - 18:00 · 昼休み 13:00 - 14:00 · 土日祝日休業',
+            ctaContact: 'お問い合わせ'
+        },
         footer: {
             companyInfo: '会社情報',
             companyName: '会社名',
@@ -206,14 +278,31 @@ const TRANSLATIONS = {
             production: 'PRODUCTION FACILITY',
             brand: 'BRAND',
             contact: 'CONTACT US',
-            shop: 'SHOP'
+            shop: 'SHOP',
+            menuOpen: 'Open Menu',
+            menuClose: 'Close Menu'
         },
         hero: {
             global: 'GLOBAL',
             companyName: 'MIJIN COSMETICS',
             description1: 'MIJIN COSMETICS manufactures and sells sheet mask packs,',
             description2: 'and as an OEM/ODM specialized company, we reach out to',
-            description3: 'customers worldwide through domestic and international distribution networks.'
+            description3: 'customers worldwide through domestic and international distribution networks.',
+            highlightDescription: 'Stable global exports backed by international certifications'
+        },
+        intro: {
+            eyebrow: 'ABOUT US',
+            title: 'MIJIN COSMETICS, Bringing Out the Best Beauty',
+            description: 'Since our founding in 1988, we have grown into a sheet mask specialist with in-house R&D and manufacturing. As an OEM/ODM partner, we provide end-to-end solutions from branding to packaging.',
+            listCampus: 'Two production campuses in Gumi and Gyeongsan',
+            listResearch: 'Dedicated teams for research, clinical, and quality assurance',
+            listPartners: 'Long-term partnerships with global distributors',
+            accentEyebrow: 'WHAT WE DO',
+            accentTitle: 'Business Area',
+            accentList1: 'OEM / ODM Project Planning',
+            accentList2: 'Sheet Mask & Skincare Manufacturing',
+            accentList3: 'Brand Launch & Market Entry Support',
+            figureCaption: 'Smart Factory · Automated Production Line'
         },
         about: {
             title1: 'MIJIN COSMETICS',
@@ -226,6 +315,19 @@ const TRANSLATIONS = {
             title2: 'for Trends',
             subtitle: 'Customized solutions for trends',
             certification: 'Certification Acquired'
+        },
+        cert: {
+            eyebrow: 'SOLUTIONS',
+            title: 'Tailored Solutions for Emerging Trends',
+            description: 'We lead the fast-changing global beauty market through multiple certifications and data-driven planning capabilities.',
+            card1Title: 'CPNP Certification',
+            card1Body: 'Completed EU cosmetic certification to secure a reliable export base.',
+            card2Title: 'Global R&D Network',
+            card2Body: 'From material development to formulation design, we conduct fully customized research.',
+            card3Title: 'Smart Manufacturing System',
+            card3Body: 'Real-time process monitoring and automation minimize quality variance.',
+            card4Title: 'Quality Control Protocols',
+            card4Body: 'Meet global standards with ISO22716, CGMP, FDA, and more.'
         },
         products: {
             title: 'Monthly product',
@@ -265,6 +367,12 @@ const TRANSLATIONS = {
             deleting: 'Deleting...',
             processing: 'Processing...',
             modalClose: 'Close product management popup'
+        },
+        cs: {
+            eyebrow: 'CS CENTER',
+            phone: '054.461.8081',
+            description: 'Weekdays 09:00 - 18:00 · Lunch 13:00 - 14:00 · Closed on weekends and holidays',
+            ctaContact: 'Contact Us'
         },
         footer: {
             companyInfo: 'Company Information',

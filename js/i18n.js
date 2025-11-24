@@ -42,6 +42,9 @@
             
             // 초기 번역 적용
             this.applyTranslations();
+
+            // 초기 언어 상태 방송 (다른 모듈 동기화용)
+            window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang: this.currentLang } }));
         },
 
         /**
@@ -57,6 +60,9 @@
             localStorage.setItem('mjcare-language', lang);
             document.documentElement.lang = lang;
             this.applyTranslations();
+
+            // 언어 변경 이벤트 발생 (다른 스크립트에서 감지용)
+            window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
         },
 
         /**
