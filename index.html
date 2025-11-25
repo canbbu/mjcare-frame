@@ -40,39 +40,97 @@
 
     <main>
         <!-- Hero -->
-        <section class="hero-section" id="hero">
-            <div class="hero-section__content">
-                <p class="hero-eyebrow">GLOBAL OEM · ODM</p>
-                <h1 data-i18n="hero.companyName">MIJIN COSMETICS</h1>
-                <p data-i18n="hero.description1">시트 마스크팩 제조 및 판매, 글로벌 유통망을 통한 맞춤형 솔루션.</p>
-                <p data-i18n="hero.description2">엄격한 품질관리 시스템과 다양한 브랜드 포트폴리오로 세계 고객과 만납니다.</p>
-                <div class="hero-actions">
-                    <a href="/about" class="btn btn-primary" data-i18n="hero.ctaAbout">회사 소개</a>
-                    <a href="/21" class="btn btn-outline" data-i18n="hero.ctaContact">CONTACT US</a>
-                </div>
-                <ul class="hero-meta">
-                    <li>
-                        <span>20+</span>
-                        <p>Years of OEM/ODM Expertise</p>
-                    </li>
-                    <li>
-                        <span>3</span>
-                        <p>Global Brands</p>
-                    </li>
-                    <li>
-                        <span>500M+</span>
-                        <p>Annual Sheet Masks</p>
-                    </li>
-                </ul>
+        <section class="hero-section" id="hero" aria-label="메인 비주얼 슬라이더">
+            <div class="hero-slider" id="heroSlider" data-auto-interval="3000">
+                <div class="hero-slider__viewport" id="heroSliderViewport" aria-live="polite"></div>
+
+                <button type="button" class="hero-slider__control hero-slider__control--prev" data-direction="prev" aria-label="이전 슬라이드">
+                    ‹
+                </button>
+                <button type="button" class="hero-slider__control hero-slider__control--next" data-direction="next" aria-label="다음 슬라이드">
+                    ›
+                </button>
+
+                <div class="hero-slider__dots" id="heroSliderDots" role="tablist" aria-label="히어로 슬라이드 이동"></div>
             </div>
-            <div class="hero-section__media">
-                <div class="media-placeholder" aria-hidden="true"></div>
-                <div class="hero highlight-card">
-                    <p>CPNP · FDA · ISO22716</p>
-                    <strong>Global Compliance</strong>
-                    <span data-i18n="hero.highlightDescription">전문 인증을 통한 안정적인 글로벌 수출</span>
-                </div>
-            </div>
+
+            <section class="hero-admin" id="heroAdmin">
+                <button type="button" class="hero-admin__toggle" id="heroAdminToggle" aria-expanded="false" aria-controls="heroAdminForm">
+                    히어로 콘텐츠 관리
+                </button>
+                <form class="hero-admin__form" id="heroAdminForm" hidden>
+                    <div class="hero-admin__grid">
+                        <label>
+                            <span>편집할 슬라이드</span>
+                            <select id="heroSlideSelect" name="selectedSlide"></select>
+                        </label>
+                        <label>
+                            <span>배경 이미지 URL</span>
+                            <input type="url" name="imageUrl" placeholder="https://example.com/hero.jpg" required>
+                        </label>
+                        <label>
+                            <span>배경 이미지 설명(alt)</span>
+                            <input type="text" name="imageAlt" placeholder="이미지 대체 텍스트">
+                        </label>
+                        <label>
+                            <span>아이브로우 텍스트</span>
+                            <input type="text" name="eyebrow" placeholder="GLOBAL OEM · ODM">
+                        </label>
+                        <label>
+                            <span>헤드라인</span>
+                            <input type="text" name="title" placeholder="메인 헤드라인" required>
+                        </label>
+                        <label>
+                            <span>설명 1</span>
+                            <textarea name="description1" rows="2" placeholder="첫 번째 설명 문장"></textarea>
+                        </label>
+                        <label>
+                            <span>설명 2</span>
+                            <textarea name="description2" rows="2" placeholder="두 번째 설명 문장"></textarea>
+                        </label>
+                        <label>
+                            <span>주요 CTA 텍스트</span>
+                            <input type="text" name="primaryLabel" placeholder="회사 소개">
+                        </label>
+                        <label>
+                            <span>주요 CTA 링크</span>
+                            <input type="text" name="primaryLink" placeholder="/about">
+                        </label>
+                        <label>
+                            <span>보조 CTA 텍스트</span>
+                            <input type="text" name="secondaryLabel" placeholder="CONTACT US">
+                        </label>
+                        <label>
+                            <span>보조 CTA 링크</span>
+                            <input type="text" name="secondaryLink" placeholder="/21">
+                        </label>
+                        <label>
+                            <span>텍스트 색상</span>
+                            <input type="color" name="textColor" value="#ffffff">
+                        </label>
+                        <label>
+                            <span>포인트 색상</span>
+                            <input type="color" name="accentColor" value="#fe6b00">
+                        </label>
+                        <label>
+                            <span>폰트 패밀리</span>
+                            <input type="text" name="fontFamily" placeholder="'Playfair Display', serif">
+                        </label>
+                        <label>
+                            <span>오버레이 색상</span>
+                            <input type="color" name="overlayColor" value="#080c18">
+                        </label>
+                        <label>
+                            <span>오버레이 투명도 (0~1)</span>
+                            <input type="number" name="overlayOpacity" min="0" max="1" step="0.05" value="0.85">
+                        </label>
+                    </div>
+                    <div class="hero-admin__actions">
+                        <button type="button" class="btn btn-outline" id="heroAdminReset">기본값 복원</button>
+                        <span class="hero-admin__note">※ 변경 내용은 이 브라우저의 로컬 저장소에만 보관됩니다.</span>
+                    </div>
+                </form>
+            </section>
         </section>
 
         <!-- Intro -->
@@ -259,6 +317,8 @@
     <script src="i18n/translations.js"></script>
     <script src="js/i18n.js"></script>
     <script src="js/products.js"></script>
+    <script src="js/hero-manager.js"></script>
+    <script src="js/hero-slider.js"></script>
     <script src="js/nav.js"></script>
     <script>
         // Placeholder 업데이트를 위한 추가 스크립트
