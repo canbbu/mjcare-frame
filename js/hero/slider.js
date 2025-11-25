@@ -1,4 +1,4 @@
-(() => {
+(function () {
     class HeroSliderController {
         constructor(root) {
             this.root = root;
@@ -156,4 +156,6 @@
     window.HeroSlider = { init };
 
     document.addEventListener('DOMContentLoaded', () => init());
+    document.addEventListener('sections:ready', () => init());
 })();
+

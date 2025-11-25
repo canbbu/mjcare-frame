@@ -38,230 +38,15 @@
     </header>
     <div class="nav-overlay" id="navOverlay" hidden></div>
 
-    <main>
-        <!-- Hero -->
-        <section class="hero-section" id="hero" aria-label="메인 비주얼 슬라이더">
-            <div class="hero-slider" id="heroSlider" data-auto-interval="3000">
-                <div class="hero-slider__viewport" id="heroSliderViewport" aria-live="polite"></div>
-
-                <button type="button" class="hero-slider__control hero-slider__control--prev" data-direction="prev" aria-label="이전 슬라이드">
-                    ‹
-                </button>
-                <button type="button" class="hero-slider__control hero-slider__control--next" data-direction="next" aria-label="다음 슬라이드">
-                    ›
-                </button>
-
-                <div class="hero-slider__dots" id="heroSliderDots" role="tablist" aria-label="히어로 슬라이드 이동"></div>
-            </div>
-
-            <section class="hero-admin" id="heroAdmin">
-                <button type="button" class="hero-admin__toggle" id="heroAdminToggle" aria-expanded="false" aria-controls="heroAdminForm">
-                    히어로 콘텐츠 관리
-                </button>
-                <form class="hero-admin__form" id="heroAdminForm" hidden>
-                    <div class="hero-admin__grid">
-                        <label>
-                            <span>편집할 슬라이드</span>
-                            <select id="heroSlideSelect" name="selectedSlide"></select>
-                        </label>
-                        <label>
-                            <span>배경 이미지 URL</span>
-                            <input type="url" name="imageUrl" placeholder="https://example.com/hero.jpg" required>
-                        </label>
-                        <label>
-                            <span>배경 이미지 설명(alt)</span>
-                            <input type="text" name="imageAlt" placeholder="이미지 대체 텍스트">
-                        </label>
-                        <label>
-                            <span>아이브로우 텍스트</span>
-                            <input type="text" name="eyebrow" placeholder="GLOBAL OEM · ODM">
-                        </label>
-                        <label>
-                            <span>헤드라인</span>
-                            <input type="text" name="title" placeholder="메인 헤드라인" required>
-                        </label>
-                        <label>
-                            <span>설명 1</span>
-                            <textarea name="description1" rows="2" placeholder="첫 번째 설명 문장"></textarea>
-                        </label>
-                        <label>
-                            <span>설명 2</span>
-                            <textarea name="description2" rows="2" placeholder="두 번째 설명 문장"></textarea>
-                        </label>
-                        <label>
-                            <span>주요 CTA 텍스트</span>
-                            <input type="text" name="primaryLabel" placeholder="회사 소개">
-                        </label>
-                        <label>
-                            <span>주요 CTA 링크</span>
-                            <input type="text" name="primaryLink" placeholder="/about">
-                        </label>
-                        <label>
-                            <span>보조 CTA 텍스트</span>
-                            <input type="text" name="secondaryLabel" placeholder="CONTACT US">
-                        </label>
-                        <label>
-                            <span>보조 CTA 링크</span>
-                            <input type="text" name="secondaryLink" placeholder="/21">
-                        </label>
-                        <label>
-                            <span>텍스트 색상</span>
-                            <input type="color" name="textColor" value="#ffffff">
-                        </label>
-                        <label>
-                            <span>포인트 색상</span>
-                            <input type="color" name="accentColor" value="#fe6b00">
-                        </label>
-                        <label>
-                            <span>폰트 패밀리</span>
-                            <input type="text" name="fontFamily" placeholder="'Playfair Display', serif">
-                        </label>
-                        <label>
-                            <span>오버레이 색상</span>
-                            <input type="color" name="overlayColor" value="#080c18">
-                        </label>
-                        <label>
-                            <span>오버레이 투명도 (0~1)</span>
-                            <input type="number" name="overlayOpacity" min="0" max="1" step="0.05" value="0.85">
-                        </label>
-                    </div>
-                    <div class="hero-admin__actions">
-                        <button type="button" class="btn btn-outline" id="heroAdminReset">기본값 복원</button>
-                        <span class="hero-admin__note">※ 변경 내용은 이 브라우저의 로컬 저장소에만 보관됩니다.</span>
-                    </div>
-                </form>
-            </section>
-        </section>
-
-        <!-- Intro -->
-        <section class="intro-section" id="about">
-            <div class="intro-grid">
-                <article class="intro-card">
-                    <p class="eyebrow" data-i18n="intro.eyebrow">ABOUT US</p>
-                    <h2 data-i18n="intro.title">최고의 아름다움을 이끌어내는 미진화장품</h2>
-                    <p data-i18n="intro.description">1988년 설립 이래 R&amp;D와 생산설비를 동시에 갖춘 시트 마스크 전문기업으로 성장했습니다. OEM/ODM 파트너로서 브랜딩 단계부터 패키징까지 원스톱 솔루션을 제공합니다.</p>
-                    <ul>
-                        <li data-i18n="intro.listCampus">구미, 경산 2개 생산 캠퍼스</li>
-                        <li data-i18n="intro.listResearch">연구·임상·품질관리 전담 조직 보유</li>
-                        <li data-i18n="intro.listPartners">글로벌 유통사와의 장기 파트너십</li>
-                    </ul>
-                </article>
-                <article class="intro-card intro-card--accent">
-                    <p class="eyebrow" data-i18n="intro.accentEyebrow">WHAT WE DO</p>
-                    <h3 data-i18n="intro.accentTitle">Business Area</h3>
-                    <ol>
-                        <li data-i18n="intro.accentList1">OEM / ODM Project Planning</li>
-                        <li data-i18n="intro.accentList2">Sheet Mask · Skincare Manufacturing</li>
-                        <li data-i18n="intro.accentList3">Brand Launch &amp; Market Entry Support</li>
-                    </ol>
-                    <a href="/business" class="btn-link" data-i18n="nav.business">BUSINESS</a>
-                </article>
-                <figure class="intro-figure">
-                    <div class="media-placeholder" aria-hidden="true"></div>
-                    <figcaption data-i18n="intro.figureCaption">Smart Factory · 자동 생산 라인</figcaption>
-                </figure>
-            </div>
-        </section>
-
-        <!-- Certification / Solutions -->
-        <section class="cert-section" id="solutions">
-            <header>
-                <p class="eyebrow" data-i18n="cert.eyebrow">SOLUTIONS</p>
-                <h2 data-i18n="cert.title">트렌드에 맞춘 맞춤형 솔루션</h2>
-                <p data-i18n="cert.description">다양한 인증 취득과 데이터 기반 기획력으로 빠르게 변화하는 글로벌 뷰티 시장을 선도합니다.</p>
-            </header>
-            <div class="cert-grid">
-                <article class="cert-card">
-                    <span>01</span>
-                    <h3 data-i18n="cert.card1Title">CPNP 인증 취득</h3>
-                    <p data-i18n="cert.card1Body">유럽 화장품 인증을 완료하여 안정적인 제품 수출 기반 확보.</p>
-                </article>
-                <article class="cert-card">
-                    <span>02</span>
-                    <h3 data-i18n="cert.card2Title">글로벌 R&amp;D 네트워크</h3>
-                    <p data-i18n="cert.card2Body">소재 개발부터 처방 설계까지 고객 맞춤형 연구 진행.</p>
-                </article>
-                <article class="cert-card">
-                    <span>03</span>
-                    <h3 data-i18n="cert.card3Title">스마트 생산 시스템</h3>
-                    <p data-i18n="cert.card3Body">실시간 공정 모니터링과 자동화 설비로 품질 편차 최소화.</p>
-                </article>
-                <article class="cert-card">
-                    <span>04</span>
-                    <h3 data-i18n="cert.card4Title">품질관리 프로토콜</h3>
-                    <p data-i18n="cert.card4Body">ISO22716, CGMP, FDA 등 복수 인증을 바탕으로 글로벌 기준 충족.</p>
-                </article>
-            </div>
-        </section>
-
-        <!-- Products Section -->
-        <section class="products-section" id="products">
-            <header class="products-header">
-                <p class="eyebrow" data-i18n="products.monthly">Monthly Product</p>
-                <h2 data-i18n="products.title">Monthly product</h2>
-                <p class="section-subtitle" data-i18n="products.subtitle">수분크림을 듬뿍 바른 듯한 사용감의 크림 마스크</p>
-            </header>
-            <div class="products-grid" id="productsGrid" aria-live="polite">
-                <p class="loading-message" data-i18n="products.loading">제품 정보를 불러오는 중입니다...</p>
-            </div>
-            <div class="product-actions">
-                <button type="button" class="product-admin-toggle" id="productModalOpen" data-i18n="products.addManage">제품 추가 / 관리</button>
-            </div>
-            <div class="product-modal" id="productModal" aria-hidden="true" role="dialog" aria-modal="true">
-                <div class="product-modal__overlay" id="productModalOverlay"></div>
-                <div class="product-modal__content" role="document">
-                    <button type="button" class="product-modal__close" id="productModalClose" data-i18n="products.modalClose" aria-label="">&times;</button>
-                    <div class="product-modal__body">
-                        <div class="product-upload">
-                            <h3 data-i18n="products.addImage">제품 이미지 추가</h3>
-                            <form id="productUploadForm">
-                                <label>
-                                    <span data-i18n="products.productImage">제품 이미지</span>
-                                    <input type="file" id="productFile" accept="image/*" required>
-                                </label>
-                                <label>
-                                    <span data-i18n="products.productName">제품명 (선택)</span>
-                                    <input type="text" id="productTitle" data-i18n-placeholder="products.productNamePlaceholder" placeholder="예: 신제품 마스크팩">
-                                </label>
-                                <label>
-                                    <span data-i18n="products.badge">배지 (선택)</span>
-                                    <input type="text" id="productBadge" data-i18n-placeholder="products.badgePlaceholder" placeholder="예: BEST">
-                                </label>
-                                <label>
-                                    <span data-i18n="products.price">가격 (선택)</span>
-                                    <input type="text" id="productPrice" data-i18n-placeholder="products.pricePlaceholder" placeholder="예: 2,000원">
-                                </label>
-                                <label>
-                                    <span data-i18n="products.subtitleText">서브텍스트 (선택)</span>
-                                    <input type="text" id="productSubtitle" data-i18n-placeholder="products.subtitlePlaceholder" placeholder="예: TIME SALE">
-                                </label>
-                                <button type="submit" id="uploadButton" data-i18n="products.addButton">이미지 추가</button>
-                            </form>
-                            <p class="upload-note" data-i18n="products.uploadNote">※ 파일명은 자동으로 카드 제목에 반영되며, 입력한 상세 정보는 이번 세션에서만 표시됩니다.</p>
-                        </div>
-                        <div class="product-admin">
-                            <h3 data-i18n="products.manage">제품 관리 (수정 / 삭제)</h3>
-                            <div class="product-admin-list" id="productAdminList">
-                                <p class="loading-message" data-i18n="products.loading">제품 정보를 불러오는 중입니다...</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact Banner -->
-        <section class="cs-banner">
-            <div class="cs-banner__content">
-                <p class="eyebrow" data-i18n="cs.eyebrow">CS CENTER</p>
-                <h2 data-i18n="cs.phone">054.461.8081</h2>
-                <p data-i18n="cs.description">평일 09:00 - 18:00 · 점심 13:00 - 14:00 · 토·일·공휴일 휴무</p>
-            </div>
-            <div class="cs-banner__actions">
-                <a href="/21" class="btn btn-primary" data-i18n="cs.ctaContact">문의하기</a>
-                <a href="mailto:mijin_kor@mjcare.co.kr" class="btn btn-outline">mijin_kor@mjcare.co.kr</a>
-            </div>
-        </section>
+    <main id="pageMain">
+        <div class="section-mount" data-include="sections/hero.html"></div>
+        <div class="section-mount" data-include="sections/intro.html"></div>
+        <div class="section-mount" data-include="sections/certifications.html"></div>
+        <div class="section-mount" data-include="sections/products.html"></div>
+        <div class="section-mount" data-include="sections/cs-banner.html"></div>
+        <noscript>
+            <p class="no-js-message">JavaScript가 비활성화되어 있어 콘텐츠를 불러올 수 없습니다.</p>
+        </noscript>
     </main>
 
     <!-- Footer -->
@@ -315,10 +100,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="config/db-config.js"></script>
     <script src="i18n/translations.js"></script>
+    <script src="js/section-loader.js"></script>
     <script src="js/i18n.js"></script>
     <script src="js/products.js"></script>
-    <script src="js/hero-manager.js"></script>
-    <script src="js/hero-slider.js"></script>
+    <script src="js/hero/slider.js"></script>
+    <script src="js/hero/manager.js"></script>
     <script src="js/nav.js"></script>
     <script>
         // Placeholder 업데이트를 위한 추가 스크립트

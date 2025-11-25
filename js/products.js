@@ -22,33 +22,57 @@
 
     const PRODUCT_METADATA = loadStoredMetadata();
 
-    const productsGrid = document.getElementById('productsGrid');
-    const productAdminList = document.getElementById('productAdminList');
-    const uploadForm = document.getElementById('productUploadForm');
-    const fileInput = document.getElementById('productFile');
-    const titleInput = document.getElementById('productTitle');
-    const badgeInput = document.getElementById('productBadge');
-    const priceInput = document.getElementById('productPrice');
-    const subtitleInput = document.getElementById('productSubtitle');
-    const uploadButton = document.getElementById('uploadButton');
-    const productModal = document.getElementById('productModal');
-    const productModalOpen = document.getElementById('productModalOpen');
-    const productModalClose = document.getElementById('productModalClose');
-    const productModalOverlay = document.getElementById('productModalOverlay');
+    let productsGrid;
+    let productAdminList;
+    let uploadForm;
+    let fileInput;
+    let titleInput;
+    let badgeInput;
+    let priceInput;
+    let subtitleInput;
+    let uploadButton;
+    let productModal;
+    let productModalOpen;
+    let productModalClose;
+    let productModalOverlay;
+    let supabaseClient;
+    let languageHandlerBound = false;
 
-    if (!productsGrid) {
-        return;
+    function bootstrap() {
+        productsGrid = document.getElementById('productsGrid');
+        productAdminList = document.getElementById('productAdminList');
+        uploadForm = document.getElementById('productUploadForm');
+        fileInput = document.getElementById('productFile');
+        titleInput = document.getElementById('productTitle');
+        badgeInput = document.getElementById('productBadge');
+        priceInput = document.getElementById('productPrice');
+        subtitleInput = document.getElementById('productSubtitle');
+        uploadButton = document.getElementById('uploadButton');
+        productModal = document.getElementById('productModal');
+        productModalOpen = document.getElementById('productModalOpen');
+        productModalClose = document.getElementById('productModalClose');
+        productModalOverlay = document.getElementById('productModalOverlay');
+
+        if (!productsGrid) {
+            return;
+        }
+
+        if (productsGrid.dataset.productsBound === 'true') {
+            return;
+        }
+        productsGrid.dataset.productsBound = 'true';
+
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        init();
+
+        if (!languageHandlerBound) {
+            window.addEventListener('languageChanged', () => {
+                loadProducts();
+            });
+            languageHandlerBound = true;
+        }
     }
-
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    
-    // 초기화
-    init();
-
-    // 언어 변경 감지
-    window.addEventListener('languageChanged', () => {
-        loadProducts();
-    });
 
     function init() {
         loadProducts();
@@ -398,5 +422,12 @@
         productModalOverlay?.addEventListener('click', closeModal);
         document.addEventListener('keydown', handleKeydown);
     }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', bootstrap);
+    } else {
+        bootstrap();
+    }
+    document.addEventListener('sections:ready', bootstrap);
 })();
 

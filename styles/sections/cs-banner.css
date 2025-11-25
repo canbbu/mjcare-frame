@@ -1,0 +1,32 @@
+/* CS banner */
+.cs-banner {
+    max-width: var(--container-max);
+    margin: 0 auto var(--space-xl);
+    padding: var(--space-lg);
+    background: #0f172a;
+    color: #fff;
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cs-banner__actions {
+    display: flex;
+    gap: var(--space-sm);
+}
+
+.cs-banner .btn-outline {
+    color: #fff;
+    border-color: rgba(255,255,255,0.3);
+}
+
+@media (max-width: 992px) {
+    .cs-banner {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
