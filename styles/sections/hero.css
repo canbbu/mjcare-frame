@@ -223,25 +223,19 @@
     padding: var(--space-lg) 20px var(--space-xl);
 }
 
-.hero-admin__toggle {
-    width: 100%;
-    padding: 14px 18px;
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--color-border);
-    background: #fff;
-    font-weight: 600;
-    cursor: pointer;
-    transition: border-color 0.3s ease, color 0.3s ease;
+.hero-admin__cta {
+    text-align: center;
 }
 
-.hero-admin__toggle[aria-expanded="true"] {
-    border-color: var(--color-accent);
-    color: var(--color-accent);
+.hero-admin__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding-inline: 38px;
 }
 
 .hero-admin__form {
     margin-top: var(--space-md);
-    border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: var(--space-lg);
     background: #fff;
@@ -289,6 +283,69 @@
     color: var(--color-muted);
 }
 
+.hero-admin-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 2100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+.hero-admin-modal.is-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.hero-admin-modal__overlay {
+    position: absolute;
+    inset: 0;
+}
+
+.hero-admin-modal__content {
+    position: relative;
+    width: min(100%, 1100px);
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    background: #fff;
+    border-radius: var(--radius-lg);
+    padding: clamp(24px, 4vw, 48px);
+    box-shadow: 0 30px 70px rgba(8, 12, 24, 0.3);
+}
+
+.hero-admin-modal__header {
+    margin-bottom: var(--space-md);
+}
+
+.hero-admin-modal__header h3 {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+}
+
+.hero-admin-modal__header p {
+    color: var(--color-muted);
+    font-size: 0.95rem;
+}
+
+.hero-admin-modal__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(0, 0, 0, 0.05);
+    font-size: 1.6rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
 @media (max-width: 992px) {
     .hero-section {
         padding-top: var(--space-lg);
@@ -324,6 +381,10 @@
 
     .hero-admin__grid {
         grid-template-columns: 1fr;
+    }
+
+    .hero-admin-modal__content {
+        padding: 24px;
     }
 
     .hero-section__content h1 {

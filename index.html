@@ -29,10 +29,52 @@
                     <li><a href="https://mjcareshop.com/main/main.html" data-i18n="nav.shop">SHOP</a></li>
                 </ul>
             </nav>
-            <div class="language-selector">
-                <button type="button" data-lang="ko">한국어</button>
-                <button type="button" data-lang="ja">日本語</button>
-                <button type="button" data-lang="en">English</button>
+            <div class="user-role-switch" id="userRoleSwitch">
+                <button type="button"
+                        class="user-role-switch__trigger"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        aria-controls="userRoleMenu">
+                    <span class="sr-only">역할 전환</span>
+                    <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                        <path d="M12 12c2.7 0 4.8-2.3 4.8-5.1S14.7 1.8 12 1.8 7.2 4.1 7.2 6.9 9.3 12 12 12zm0 2.4c-3.5 0-10.2 1.8-10.2 5.4 0 1 .9 2.4 2.1 2.4h16.2c1.2 0 2.1-1.4 2.1-2.4 0-3.6-6.7-5.4-10.2-5.4z" />
+                    </svg>
+                    <span class="user-role-switch__label" data-role-label>일반 회원</span>
+                </button>
+                <div class="user-role-switch__menu" id="userRoleMenu" role="menu">
+                    <button type="button" class="user-role-switch__option" data-role-target="user" role="menuitem">
+                        일반 회원
+                    </button>
+                    <button type="button" class="user-role-switch__option" data-role-target="admin" role="menuitem">
+                        관리자
+                    </button>
+                </div>
+            </div>
+            <div class="language-selector" id="languageSelector">
+                <button type="button"
+                        class="language-selector__trigger"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                        data-current-lang>
+                    한국어
+                </button>
+                <ul class="language-selector__dropdown" role="menu">
+                    <li>
+                        <button type="button" class="language-selector__option" data-lang="ko" role="menuitem">
+                            한국어
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="language-selector__option" data-lang="ja" role="menuitem">
+                            日本語
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" class="language-selector__option" data-lang="en" role="menuitem">
+                            English
+                        </button>
+                    </li>
+                </ul>
             </div>
         </div>
     </header>
@@ -106,6 +148,7 @@
     <script src="js/hero/slider.js"></script>
     <script src="js/hero/manager.js"></script>
     <script src="js/nav.js"></script>
+    <script src="js/admin-ui.js"></script>
     <script>
         // Placeholder 업데이트를 위한 추가 스크립트
         (function() {

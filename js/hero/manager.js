@@ -162,7 +162,6 @@
             const viewport = document.getElementById('heroSliderViewport');
             const dotsContainer = document.getElementById('heroSliderDots');
             const form = document.getElementById('heroAdminForm');
-            const toggleBtn = document.getElementById('heroAdminToggle');
             const slideSelect = document.getElementById('heroSlideSelect');
             const resetBtn = document.getElementById('heroAdminReset');
 
@@ -266,17 +265,6 @@
                 updateSlideField(name, value);
             }
 
-            function togglePanel() {
-                if (!form || !toggleBtn) return;
-                const isHidden = form.hasAttribute('hidden');
-                if (isHidden) {
-                    form.removeAttribute('hidden');
-                } else {
-                    form.setAttribute('hidden', '');
-                }
-                toggleBtn.setAttribute('aria-expanded', String(isHidden));
-            }
-
             function resetSlides() {
                 if (!window.confirm('히어로 슬라이드를 기본값으로 복원할까요?')) return;
                 slidesData = clone(DEFAULT_SLIDES);
@@ -294,7 +282,6 @@
             slideSelect?.addEventListener('change', handleFormChange);
             form?.addEventListener('input', handleFormChange);
             form?.addEventListener('change', handleFormChange);
-            toggleBtn?.addEventListener('click', togglePanel);
             resetBtn?.addEventListener('click', resetSlides);
         }
 

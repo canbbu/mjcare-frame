@@ -91,26 +91,66 @@
          * 언어 선택기 설정
          */
         setupLanguageSelector() {
-            const selector = document.querySelector('.language-selector');
+            const selector = document.getElementById('languageSelector');
             if (!selector) return;
 
-            const buttons = selector.querySelectorAll('button');
-            buttons.forEach(button => {
-                button.addEventListener('click', () => {
-                    const lang = button.dataset.lang;
-                    if (lang) {
-                        this.setLanguage(lang);
-                        // 활성 버튼 업데이트
-                        buttons.forEach(btn => btn.classList.remove('active'));
-                        button.classList.add('active');
-                    }
+            const trigger = selector.querySelector('.language-selector__trigger');
+            const options = selector.querySelectorAll('.language-selector__option');
+
+            const closeDropdown = () => {
+                selector.classList.remove('is-open');
+                if (trigger) {
+                    trigger.setAttribute('aria-expanded', 'false');
+                }
+            };
+
+            const updateActiveState = () => {
+                options.forEach(option => {
+                    const isActive = option.dataset.lang === this.currentLang;
+                    option.classList.toggle('active', isActive);
                 });
 
-                // 현재 언어 버튼 활성화
-                if (button.dataset.lang === this.currentLang) {
-                    button.classList.add('active');
+                if (trigger) {
+                    const activeOption = selector.querySelector(`.language-selector__option[data-lang="${this.currentLang}"]`);
+                    if (activeOption) {
+                        trigger.textContent = activeOption.textContent.trim();
+                    }
+                }
+            };
+
+            options.forEach(option => {
+                option.addEventListener('click', () => {
+                    const lang = option.dataset.lang;
+                    if (lang) {
+                        this.setLanguage(lang);
+                        updateActiveState();
+                        closeDropdown();
+                    }
+                });
+            });
+
+            if (trigger) {
+                trigger.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    const willOpen = !selector.classList.contains('is-open');
+                    selector.classList.toggle('is-open', willOpen);
+                    trigger.setAttribute('aria-expanded', String(willOpen));
+                });
+            }
+
+            document.addEventListener('click', (event) => {
+                if (!selector.contains(event.target)) {
+                    closeDropdown();
                 }
             });
+
+            selector.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') {
+                    closeDropdown();
+                }
+            });
+
+            updateActiveState();
         },
 
         /**

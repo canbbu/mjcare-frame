@@ -7,9 +7,9 @@
     <div class="products-grid" id="productsGrid" aria-live="polite">
         <p class="loading-message" data-i18n="products.loading">제품 정보를 불러오는 중입니다...</p>
     </div>
-    <div class="product-actions">
+    <div class="product-actions" data-role-visibility="admin" hidden>
         <button type="button" class="product-admin-toggle" id="productModalOpen" data-i18n="products.addManage">제품 추가 / 관리</button>
     </div>
-    <div data-include="partials/product-modal.html"></div>
+    <div data-include="partials/product-modal.html" data-role-visibility="admin" hidden></div>
 </section>
 
