@@ -24,8 +24,18 @@ const TRANSLATIONS = {
             description3: '전세계의 고객들에게 다가가고 있습니다.',
             highlightDescription: '전문 인증을 통한 안정적인 글로벌 수출',
             manage: '히어로 콘텐츠 관리',
-            imageUrlLabel: '背景画像URL',
-            imageUploadHelp: 'URL을 입력하거나 이미지를 업로드하세요'
+            selectSlide: '편집할 슬라이드',
+            imageUrlLabel: '배경 이미지 URL',
+            imageUploadHelp: 'URL을 입력하거나 이미지를 업로드하세요',
+            title: '제목',
+            description: '설명',
+            buttonLabel: '버튼 텍스트',
+            buttonLink: '버튼 링크',
+            addSlide: '슬라이드 추가',
+            insertSlide: '현재 위치에 삽입',
+            deleteSlide: '슬라이드 삭제',
+            reset: '기본값으로 복원',
+            note: '※ 변경 내용은 이 브라우저의 로컬 스토리지에만 저장됩니다.'
         },
         intro: {
             eyebrow: 'ABOUT US',
@@ -162,8 +172,18 @@ const TRANSLATIONS = {
             description3: '世界中のお客様にアプローチしています。',
             highlightDescription: '専門認証を通じた安定的なグローバル輸出',
             manage: 'ヒーローコンテンツ管理',
+            selectSlide: '編集するスライド',
             imageUrlLabel: '背景画像URL',
-            imageUploadHelp: 'URLを入力するか、画像をアップロードしてください'
+            imageUploadHelp: 'URLを入力するか、画像をアップロードしてください',
+            title: 'ヘッドライン',
+            description: '説明',
+            buttonLabel: 'ボタンテキスト',
+            buttonLink: 'ボタンリンク',
+            addSlide: 'スライド追加',
+            insertSlide: '現在の位置に挿入',
+            deleteSlide: 'スライド削除',
+            reset: 'デフォルト値に復元',
+            note: '※変更内容はこのブラウザのローカルストレージにのみ保存されます。'
         },
         intro: {
             eyebrow: 'ABOUT US',
@@ -296,8 +316,18 @@ const TRANSLATIONS = {
             description3: 'customers worldwide through domestic and international distribution networks.',
             highlightDescription: 'Stable global exports backed by international certifications',
             manage: 'Hero Content Management',
+            selectSlide: 'Select Slide to Edit',
             imageUrlLabel: 'Background Image URL',
-            imageUploadHelp: 'Enter a URL or upload an image'
+            imageUploadHelp: 'Enter a URL or upload an image',
+            title: 'Title',
+            description: 'Description',
+            buttonLabel: 'Button Text',
+            buttonLink: 'Button Link',
+            addSlide: 'Add Slide',
+            insertSlide: 'Insert at Current Position',
+            deleteSlide: 'Delete Slide',
+            reset: 'Reset to Default',
+            note: '※ Changes are saved only in this browser\'s local storage.'
         },
         intro: {
             eyebrow: 'ABOUT US',

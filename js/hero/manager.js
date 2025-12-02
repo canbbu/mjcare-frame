@@ -98,45 +98,41 @@
     }
 
     function createSlideTemplate(slide, index) {
+        // 기본 스타일 변수 (간단한 구조를 위해 고정값 사용)
         const inlineVars = [
-            `--hero-text-color:${slide.textColor || '#ffffff'}`,
-            `--hero-accent-color:${slide.accentColor || 'var(--color-accent)'}`,
-            `--hero-font-family:${normalizeFontFamily(slide.fontFamily)}`,
-            `--hero-overlay-color:${slide.overlayColor || '#080c18'}`,
-            `--hero-overlay-opacity:${typeof slide.overlayOpacity === 'number' ? slide.overlayOpacity : 0.85}`
+            `--hero-text-color:#ffffff`,
+            `--hero-accent-color:var(--color-accent)`,
+            `--hero-font-family:var(--font-serif)`,
+            `--hero-overlay-color:#080c18`,
+            `--hero-overlay-opacity:0.85`
         ].join(';');
 
-        const descriptions = [slide.description1, slide.description2]
-            .filter(Boolean)
-            .map((text) => `<p>${escapeHtml(text)}</p>`)
-            .join('');
-
-        const primaryCta = slide.primaryLabel && slide.primaryLink
-            ? `<a href="${escapeHtml(slide.primaryLink)}" class="btn btn-primary">${escapeHtml(slide.primaryLabel)}</a>`
+        // 설명 텍스트 (description 필드 사용, 없으면 description1/description2 호환)
+        const description = slide.description || slide.description1 || '';
+        const descriptionHtml = description
+            ? `<p>${escapeHtml(description)}</p>`
             : '';
 
-        const secondaryCta = slide.secondaryLabel && slide.secondaryLink
-            ? `<a href="${escapeHtml(slide.secondaryLink)}" class="btn btn-outline">${escapeHtml(slide.secondaryLabel)}</a>`
-            : '';
-
-        const actions = (primaryCta || secondaryCta)
-            ? `<div class="hero-actions">${primaryCta}${secondaryCta}</div>`
+        // 버튼 (buttonLabel과 buttonLink 사용, 없으면 primaryLabel/primaryLink 호환)
+        const buttonLabel = slide.buttonLabel || slide.primaryLabel || '';
+        const buttonLink = slide.buttonLink || slide.primaryLink || '';
+        const button = (buttonLabel && buttonLink)
+            ? `<div class="hero-actions"><a href="${escapeHtml(buttonLink)}" class="btn btn-primary">${escapeHtml(buttonLabel)}</a></div>`
             : '';
 
         return `
             <article class="hero-slide${index === 0 ? ' is-active' : ''}" data-slide-index="${index}" id="hero-slide-${index}" style="${inlineVars}">
                 <img
                     src="${escapeHtml(slide.imageUrl)}"
-                    alt="${escapeHtml(slide.imageAlt || '')}"
+                    alt="${escapeHtml(slide.imageAlt || slide.title || '')}"
                     class="hero-slide__media"
                     loading="lazy"
                 >
                 <div class="hero-slide__content">
                     <div class="hero-slide__text">
-                        ${slide.eyebrow ? `<p class="hero-eyebrow">${escapeHtml(slide.eyebrow)}</p>` : ''}
-                        <h1>${escapeHtml(slide.title)}</h1>
-                        ${descriptions}
-                        ${actions}
+                        <h1>${escapeHtml(slide.title || '')}</h1>
+                        ${descriptionHtml}
+                        ${button}
                     </div>
                 </div>
             </article>
@@ -176,6 +172,9 @@
             const form = document.getElementById('heroAdminForm');
             const slideSelect = document.getElementById('heroSlideSelect');
             const resetBtn = document.getElementById('heroAdminReset');
+            const addSlideBtn = document.getElementById('heroSlideAdd');
+            const insertSlideBtn = document.getElementById('heroSlideInsert');
+            const deleteSlideBtn = document.getElementById('heroSlideDelete');
             const imageFileInput = document.getElementById('heroImageFile');
             const imageUrlInput = form?.elements?.imageUrl;
 
@@ -230,32 +229,32 @@
                 const current = slidesData[selectedIndex];
                 if (!current) return;
 
+                // 간단한 필드만 처리
                 const fields = [
                     'imageUrl',
-                    'imageAlt',
-                    'eyebrow',
                     'title',
-                    'description1',
-                    'description2',
-                    'primaryLabel',
-                    'primaryLink',
-                    'secondaryLabel',
-                    'secondaryLink',
-                    'textColor',
-                    'accentColor',
-                    'fontFamily',
-                    'overlayColor'
+                    'description',
+                    'buttonLabel',
+                    'buttonLink'
                 ];
 
                 fields.forEach((name) => {
                     if (form.elements[name]) {
-                        form.elements[name].value = current[name] ?? '';
+                        // 호환성을 위해 기존 필드에서 값 가져오기
+                        let value = current[name];
+                        if (!value) {
+                            // 기존 데이터 구조와 호환
+                            if (name === 'description') {
+                                value = current.description1 || current.description || '';
+                            } else if (name === 'buttonLabel') {
+                                value = current.primaryLabel || '';
+                            } else if (name === 'buttonLink') {
+                                value = current.primaryLink || '';
+                            }
+                        }
+                        form.elements[name].value = value ?? '';
                     }
                 });
-
-                if (form.elements.overlayOpacity) {
-                    form.elements.overlayOpacity.value = current.overlayOpacity ?? 0.85;
-                }
             }
 
             async function uploadImageFile(file) {
@@ -340,16 +339,15 @@
 
             function updateSlideField(name, value) {
                 const targetSlide = slidesData[selectedIndex];
-                if (!targetSlide || !(name in targetSlide || name === 'overlayOpacity')) return;
+                if (!targetSlide) return;
 
-                if (name === 'overlayOpacity') {
-                    targetSlide.overlayOpacity = normalizeOpacity(value, targetSlide.overlayOpacity ?? 0.85);
-                } else {
+                // 간단한 필드만 업데이트
+                const allowedFields = ['imageUrl', 'title', 'description', 'buttonLabel', 'buttonLink'];
+                if (allowedFields.includes(name)) {
                     targetSlide[name] = value;
+                    saveSlides(slidesData);
+                    renderSlides();
                 }
-
-                saveSlides(slidesData);
-                renderSlides();
             }
 
             function handleFormChange(event) {
@@ -363,6 +361,61 @@
                 }
 
                 updateSlideField(name, value);
+            }
+
+            function createNewSlide() {
+                // 간단한 기본 슬라이드 템플릿 생성
+                return clone({
+                    imageUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=80',
+                    title: '새 슬라이드',
+                    description: '',
+                    buttonLabel: '',
+                    buttonLink: ''
+                });
+            }
+
+            function addSlide() {
+                const newSlide = createNewSlide();
+                slidesData.push(newSlide);
+                selectedIndex = slidesData.length - 1;
+                saveSlides(slidesData);
+                populateSelect();
+                hydrateForm();
+                renderSlides();
+            }
+
+            function insertSlide() {
+                const newSlide = createNewSlide();
+                slidesData.splice(selectedIndex + 1, 0, newSlide);
+                selectedIndex = selectedIndex + 1;
+                saveSlides(slidesData);
+                populateSelect();
+                hydrateForm();
+                renderSlides();
+            }
+
+            function deleteSlide() {
+                if (slidesData.length <= 1) {
+                    alert('최소 1개의 슬라이드는 유지해야 합니다.');
+                    return;
+                }
+
+                const slideTitle = slidesData[selectedIndex]?.title || `슬라이드 ${padIndex(selectedIndex)}`;
+                if (!window.confirm(`"${slideTitle}" 슬라이드를 삭제하시겠습니까?`)) {
+                    return;
+                }
+
+                slidesData.splice(selectedIndex, 1);
+                
+                // 삭제 후 인덱스 조정
+                if (selectedIndex >= slidesData.length) {
+                    selectedIndex = slidesData.length - 1;
+                }
+
+                saveSlides(slidesData);
+                populateSelect();
+                hydrateForm();
+                renderSlides();
             }
 
             function resetSlides() {
@@ -383,6 +436,9 @@
             form?.addEventListener('input', handleFormChange);
             form?.addEventListener('change', handleFormChange);
             resetBtn?.addEventListener('click', resetSlides);
+            addSlideBtn?.addEventListener('click', addSlide);
+            insertSlideBtn?.addEventListener('click', insertSlide);
+            deleteSlideBtn?.addEventListener('click', deleteSlide);
             imageFileInput?.addEventListener('change', handleImageFileChange);
         }
 

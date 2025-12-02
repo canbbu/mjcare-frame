@@ -34,7 +34,7 @@
                 <form class="hero-admin__form" id="heroAdminForm">
                     <div class="hero-admin__grid">
                         <label>
-                            <span>編集するスライド</span>
+                            <span data-i18n="hero.selectSlide">編集するスライド</span>
                             <select id="heroSlideSelect" name="selectedSlide"></select>
                         </label>
                         <label>
@@ -44,65 +44,30 @@
                             <small style="display: block; margin-top: 0.25rem; color: #666;" data-i18n="hero.imageUploadHelp">URLを入力するか、画像をアップロードしてください</small>
                         </label>
                         <label>
-                            <span>背景画像説明(alt)</span>
-                            <input type="text" name="imageAlt" placeholder="画像代替テキスト">
-                        </label>
-                        <label>
-                            <span>アイブロウテキスト</span>
-                            <input type="text" name="eyebrow" placeholder="GLOBAL OEM · ODM">
-                        </label>
-                        <label>
-                            <span>ヘッドライン</span>
+                            <span data-i18n="hero.title">ヘッドライン</span>
                             <input type="text" name="title" placeholder="メインヘッドライン" required>
                         </label>
                         <label>
-                            <span>説明1</span>
-                            <textarea name="description1" rows="2" placeholder="最初の説明文"></textarea>
+                            <span data-i18n="hero.description">説明</span>
+                            <textarea name="description" rows="4" placeholder="詳細な説明文"></textarea>
                         </label>
                         <label>
-                            <span>説明2</span>
-                            <textarea name="description2" rows="2" placeholder="2番目の説明文"></textarea>
+                            <span data-i18n="hero.buttonLabel">ボタンテキスト</span>
+                            <input type="text" name="buttonLabel" placeholder="ボタンラベル">
                         </label>
                         <label>
-                            <span>主要CTAテキスト</span>
-                            <input type="text" name="primaryLabel" placeholder="会社紹介">
-                        </label>
-                        <label>
-                            <span>主要CTAリンク</span>
-                            <input type="text" name="primaryLink" placeholder="/about">
-                        </label>
-                        <label>
-                            <span>補助CTAテキスト</span>
-                            <input type="text" name="secondaryLabel" placeholder="CONTACT US">
-                        </label>
-                        <label>
-                            <span>補助CTAリンク</span>
-                            <input type="text" name="secondaryLink" placeholder="/21">
-                        </label>
-                        <label>
-                            <span>テキスト色</span>
-                            <input type="color" name="textColor" value="#ffffff">
-                        </label>
-                        <label>
-                            <span>ポイント色</span>
-                            <input type="color" name="accentColor" value="#fe6b00">
-                        </label>
-                        <label>
-                            <span>フォントファミリー</span>
-                            <input type="text" name="fontFamily" placeholder="'Playfair Display', serif">
-                        </label>
-                        <label>
-                            <span>オーバーレイ色</span>
-                            <input type="color" name="overlayColor" value="#080c18">
-                        </label>
-                        <label>
-                            <span>オーバーレイ透明度(0~1)</span>
-                            <input type="number" name="overlayOpacity" min="0" max="1" step="0.05" value="0.85">
+                            <span data-i18n="hero.buttonLink">ボタンリンク</span>
+                            <input type="text" name="buttonLink" placeholder="/about">
                         </label>
                     </div>
                     <div class="hero-admin__actions">
-                        <button type="button" class="btn btn-outline" id="heroAdminReset">デフォルト値に復元</button>
-                        <span class="hero-admin__note">※変更内容はこのブラウザのローカルストレージにのみ保存されます。</span>
+                        <div class="hero-admin__slide-controls" style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-outline" id="heroSlideAdd" data-i18n="hero.addSlide">슬라이드 추가</button>
+                            <button type="button" class="btn btn-outline" id="heroSlideInsert" data-i18n="hero.insertSlide">현재 위치에 삽입</button>
+                            <button type="button" class="btn btn-outline" id="heroSlideDelete" data-i18n="hero.deleteSlide">슬라이드 삭제</button>
+                        </div>
+                        <button type="button" class="btn btn-outline" id="heroAdminReset" data-i18n="hero.reset">デフォルト値に復元</button>
+                        <span class="hero-admin__note" data-i18n="hero.note">※変更内容はこのブラウザのローカルストレージにのみ保存されます。</span>
                     </div>
                 </form>
             </div>

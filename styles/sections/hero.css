@@ -58,7 +58,7 @@
     position: relative;
     z-index: 2;
     height: 100%;
-    padding: var(--space-xl) clamp(20px, 8vw, 120px);
+    padding: var(--space-xl) clamp(20px, 10vw, 120px);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -101,11 +101,16 @@
 }
 
 .hero-slide .btn-primary {
-    background: var(--hero-accent-color, var(--color-accent));
+    background: transparent;
+    border: 1px solid var(--hero-accent-color, var(--color-accent));
+    color: var(--hero-text-color, #fff);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 .hero-slide .btn-primary:hover {
-    background: color-mix(in srgb, var(--hero-accent-color, var(--color-accent)) 85%, black);
+    background: var(--hero-accent-color, var(--color-accent));
+    border-color: var(--hero-accent-color, var(--color-accent));
+    color: #fff;
 }
 
 .hero-slide .btn-outline {
