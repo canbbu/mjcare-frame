@@ -4,36 +4,36 @@
         <button type="button" class="product-modal__close" id="productModalClose" data-i18n="products.modalClose" aria-label="">&times;</button>
         <div class="product-modal__body">
             <div class="product-upload">
-                <h3 data-i18n="products.addImage">제품 이미지 추가</h3>
+                <h3 data-i18n="products.addImage">製品画像追加</h3>
                 <form id="productUploadForm">
                     <label>
-                        <span data-i18n="products.productImage">제품 이미지</span>
+                        <span data-i18n="products.productImage">製品画像</span>
                         <input type="file" id="productFile" accept="image/*" required>
                     </label>
                     <label>
-                        <span data-i18n="products.productName">제품명 (선택)</span>
-                        <input type="text" id="productTitle" data-i18n-placeholder="products.productNamePlaceholder" placeholder="예: 신제품 마스크팩">
+                        <span data-i18n="products.productName">製品名（任意）</span>
+                        <input type="text" id="productTitle" data-i18n-placeholder="products.productNamePlaceholder" placeholder="例：新製品マスクパック">
                     </label>
                     <label>
-                        <span data-i18n="products.badge">배지 (선택)</span>
-                        <input type="text" id="productBadge" data-i18n-placeholder="products.badgePlaceholder" placeholder="예: BEST">
+                        <span data-i18n="products.badge">バッジ（任意）</span>
+                        <input type="text" id="productBadge" data-i18n-placeholder="products.badgePlaceholder" placeholder="例：BEST">
                     </label>
                     <label>
-                        <span data-i18n="products.price">가격 (선택)</span>
-                        <input type="text" id="productPrice" data-i18n-placeholder="products.pricePlaceholder" placeholder="예: 2,000원">
+                        <span data-i18n="products.price">価格（任意）</span>
+                        <input type="text" id="productPrice" data-i18n-placeholder="products.pricePlaceholder" placeholder="例：2,000円">
                     </label>
                     <label>
-                        <span data-i18n="products.subtitleText">서브텍스트 (선택)</span>
-                        <input type="text" id="productSubtitle" data-i18n-placeholder="products.subtitlePlaceholder" placeholder="예: TIME SALE">
+                        <span data-i18n="products.subtitleText">サブテキスト（任意）</span>
+                        <input type="text" id="productSubtitle" data-i18n-placeholder="products.subtitlePlaceholder" placeholder="例：TIME SALE">
                     </label>
-                    <button type="submit" id="uploadButton" data-i18n="products.addButton">이미지 추가</button>
+                    <button type="submit" id="uploadButton" data-i18n="products.addButton">画像追加</button>
                 </form>
-                <p class="upload-note" data-i18n="products.uploadNote">※ 파일명은 자동으로 카드 제목에 반영되며, 입력한 상세 정보는 이번 세션에서만 표시됩니다.</p>
+                <p class="upload-note" data-i18n="products.uploadNote">※ファイル名は自動的にカードタイトルに反映され、入力した詳細情報はこのセッションでのみ表示されます。</p>
             </div>
             <div class="product-admin">
-                <h3 data-i18n="products.manage">제품 관리 (수정 / 삭제)</h3>
+                <h3 data-i18n="products.manage">製品管理（編集 / 削除）</h3>
                 <div class="product-admin-list" id="productAdminList">
-                    <p class="loading-message" data-i18n="products.loading">제품 정보를 불러오는 중입니다...</p>
+                    <p class="loading-message" data-i18n="products.loading">製品情報を読み込んでいます...</p>
                 </div>
             </div>
         </div>

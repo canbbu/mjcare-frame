@@ -57,10 +57,10 @@
     }
 
     function updateRoleSwitchUI(role) {
-        const label = document.querySelector('[data-role-label]');
-        if (label) {
-            label.textContent = role === 'admin' ? '관리자 모드' : '일반 회원';
-        }
+        const labels = document.querySelectorAll('[data-role-label]');
+        labels.forEach((label) => {
+            label.textContent = role === 'admin' ? '管理者モード' : '一般会員';
+        });
 
         const options = document.querySelectorAll('[data-role-target]');
         options.forEach((option) => {
@@ -72,27 +72,29 @@
 
     function bindRoleSwitch() {
         if (roleMenuBound) return;
-        const switchRoot = document.getElementById('userRoleSwitch');
-        if (!switchRoot) return;
+        const switchRoots = document.querySelectorAll('[id^="userRoleSwitch"]');
+        if (!switchRoots.length) return;
 
-        const trigger = switchRoot.querySelector('.user-role-switch__trigger');
-        const options = switchRoot.querySelectorAll('[data-role-target]');
+        switchRoots.forEach((switchRoot) => {
+            const trigger = switchRoot.querySelector('.user-role-switch__trigger');
+            const options = switchRoot.querySelectorAll('[data-role-target]');
 
-        options.forEach((option) => {
-            option.addEventListener('click', () => {
-                const nextRole = option.getAttribute('data-role-target');
-                if (!nextRole || nextRole === currentRole) return;
-                applyRole(nextRole);
-                saveRole(nextRole);
+            options.forEach((option) => {
+                option.addEventListener('click', () => {
+                    const nextRole = option.getAttribute('data-role-target');
+                    if (!nextRole || nextRole === currentRole) return;
+                    applyRole(nextRole);
+                    saveRole(nextRole);
+                });
             });
-        });
 
-        switchRoot.addEventListener('mouseenter', () => {
-            trigger?.setAttribute('aria-expanded', 'true');
-        });
+            switchRoot.addEventListener('mouseenter', () => {
+                trigger?.setAttribute('aria-expanded', 'true');
+            });
 
-        switchRoot.addEventListener('mouseleave', () => {
-            trigger?.setAttribute('aria-expanded', 'false');
+            switchRoot.addEventListener('mouseleave', () => {
+                trigger?.setAttribute('aria-expanded', 'false');
+            });
         });
 
         roleMenuBound = true;

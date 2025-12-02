@@ -6,27 +6,25 @@
     'use strict';
 
     const I18n = {
-        currentLang: 'ko', // 기본 언어
+        currentLang: 'ja', // 기본 언어
         translations: null,
 
         /**
          * 초기화
          */
         init() {
-            // 저장된 언어 설정 불러오기
+            // 초기 로드 시 기본 언어는 항상 일본어로 설정
+            // (사용자가 명시적으로 언어를 변경한 경우에만 localStorage 사용)
             const savedLang = localStorage.getItem('mjcare-language');
+            // 저장된 언어가 있고, 사용자가 이전에 변경한 경우에만 사용
+            // 초기 로드 시에는 항상 일본어로 시작
             if (savedLang && ['ko', 'ja', 'en'].includes(savedLang)) {
                 this.currentLang = savedLang;
             } else {
-                // 브라우저 언어 감지
-                const browserLang = navigator.language || navigator.userLanguage;
-                if (browserLang.startsWith('ja')) {
-                    this.currentLang = 'ja';
-                } else if (browserLang.startsWith('en')) {
-                    this.currentLang = 'en';
-                } else {
-                    this.currentLang = 'ko';
-                }
+                // 기본 언어는 일본어
+                this.currentLang = 'ja';
+                // 초기 로드 시 일본어로 설정
+                localStorage.setItem('mjcare-language', 'ja');
             }
 
             // 번역 데이터 로드
@@ -91,8 +89,15 @@
          * 언어 선택기 설정
          */
         setupLanguageSelector() {
-            const selector = document.getElementById('languageSelector');
-            if (!selector) return;
+            const selectors = document.querySelectorAll('[id^="languageSelector"]');
+            if (!selectors.length) return;
+
+            selectors.forEach((selector) => {
+                this.setupSingleLanguageSelector(selector);
+            });
+        },
+
+        setupSingleLanguageSelector(selector) {
 
             const trigger = selector.querySelector('.language-selector__trigger');
             const options = selector.querySelectorAll('.language-selector__option');
@@ -111,10 +116,21 @@
                 });
 
                 if (trigger) {
-                    const activeOption = selector.querySelector(`.language-selector__option[data-lang="${this.currentLang}"]`);
-                    if (activeOption) {
-                        trigger.textContent = activeOption.textContent.trim();
-                    }
+                    // 국기만 표시
+                    const flagMap = {
+                        'ko': '🇰🇷',
+                        'ja': '🇯🇵',
+                        'en': '🇺🇸'
+                    };
+                    trigger.textContent = flagMap[this.currentLang] || '🇯🇵';
+                    
+                    // aria-label 업데이트
+                    const labelMap = {
+                        'ko': '한국어',
+                        'ja': '日本語',
+                        'en': 'English'
+                    };
+                    trigger.setAttribute('aria-label', `언어 선택: ${labelMap[this.currentLang] || '日本語'}`);
                 }
             };
 
@@ -168,7 +184,10 @@
                 } else if (element.tagName === 'INPUT' && element.type === 'submit') {
                     element.value = translation;
                 } else if (element.tagName === 'BUTTON') {
-                    element.textContent = translation;
+                    // 언어 선택기 트리거는 제외 (국기만 표시)
+                    if (!element.hasAttribute('data-current-lang')) {
+                        element.textContent = translation;
+                    }
                 } else if (element.tagName === 'IMG') {
                     element.alt = translation;
                 } else if (element.hasAttribute('aria-label')) {

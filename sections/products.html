@@ -2,13 +2,27 @@
     <header class="products-header">
         <p class="eyebrow" data-i18n="products.monthly">Monthly Product</p>
         <h2 data-i18n="products.title">Monthly product</h2>
-        <p class="section-subtitle" data-i18n="products.subtitle">수분크림을 듬뿍 바른 듯한 사용감의 크림 마스크</p>
+        <p class="section-subtitle" data-i18n="products.subtitle">クリームをたっぷり塗ったような使用感のクリームマスク</p>
     </header>
-    <div class="products-grid" id="productsGrid" aria-live="polite">
-        <p class="loading-message" data-i18n="products.loading">제품 정보를 불러오는 중입니다...</p>
+    <div class="products-slider-wrapper">
+        <button class="products-slider-btn products-slider-btn--prev" aria-label="前の製品" id="productsSliderPrev">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M15 18l-6-6 6-6"/>
+            </svg>
+        </button>
+        <div class="products-slider-container">
+            <div class="products-grid" id="productsGrid" aria-live="polite">
+                <p class="loading-message" data-i18n="products.loading">製品情報を読み込んでいます...</p>
+            </div>
+        </div>
+        <button class="products-slider-btn products-slider-btn--next" aria-label="次の製品" id="productsSliderNext">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M9 18l6-6-6-6"/>
+            </svg>
+        </button>
     </div>
     <div class="product-actions" data-role-visibility="admin" hidden>
-        <button type="button" class="product-admin-toggle" id="productModalOpen" data-i18n="products.addManage">제품 추가 / 관리</button>
+        <button type="button" class="product-admin-toggle" id="productModalOpen" data-i18n="products.addManage">製品追加 / 管理</button>
     </div>
     <div data-include="partials/product-modal.html" data-role-visibility="admin" hidden></div>
 </section>

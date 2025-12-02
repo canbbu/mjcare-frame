@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="(주)미진화장품 - 시트 마스크팩 제조 및 판매, OEM/ODM 전문기업">
+    <meta name="description" content="（株）ミジン化粧品 - シートマスクパック製造・販売、OEM/ODM専門企業">
     <meta name="keywords" content="MIJIN,COSMETICS">
     <title>MIJIN COSMETICS</title>
     <link rel="stylesheet" href="styles/main.css">
@@ -14,13 +14,14 @@
     <header>
         <div class="header-container">
             <a href="/" class="logo">MIJIN COSMETICS</a>
-            <button type="button" class="nav-toggle" id="navToggle" aria-label="메뉴 열기" aria-controls="siteNav" aria-expanded="false">
+            <button type="button" class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-controls="siteNav" aria-expanded="false">
                 <span class="nav-toggle__bar"></span>
                 <span class="nav-toggle__bar"></span>
                 <span class="nav-toggle__bar"></span>
             </button>
-            <nav id="siteNav" aria-label="주 메뉴">
-                <ul>
+            <nav id="siteNav" aria-label="メインメニュー">
+                <a href="/" class="nav-logo">MIJIN COSMETICS</a>
+                <ul class="nav-main">
                     <li><a href="/about" data-i18n="nav.about">ABOUT US</a></li>
                     <li><a href="/business" data-i18n="nav.business">BUSINESS</a></li>
                     <li><a href="/19" data-i18n="nav.production">PRODUCTION FACILITY</a></li>
@@ -28,53 +29,98 @@
                     <li><a href="/21" data-i18n="nav.contact">CONTACT US</a></li>
                     <li><a href="https://mjcareshop.com/main/main.html" data-i18n="nav.shop">SHOP</a></li>
                 </ul>
-            </nav>
-            <div class="user-role-switch" id="userRoleSwitch">
-                <button type="button"
-                        class="user-role-switch__trigger"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        aria-controls="userRoleMenu">
-                    <span class="sr-only">역할 전환</span>
-                    <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
-                        <path d="M12 12c2.7 0 4.8-2.3 4.8-5.1S14.7 1.8 12 1.8 7.2 4.1 7.2 6.9 9.3 12 12 12zm0 2.4c-3.5 0-10.2 1.8-10.2 5.4 0 1 .9 2.4 2.1 2.4h16.2c1.2 0 2.1-1.4 2.1-2.4 0-3.6-6.7-5.4-10.2-5.4z" />
-                    </svg>
-                    <span class="user-role-switch__label" data-role-label>일반 회원</span>
-                </button>
-                <div class="user-role-switch__menu" id="userRoleMenu" role="menu">
-                    <button type="button" class="user-role-switch__option" data-role-target="user" role="menuitem">
-                        일반 회원
-                    </button>
-                    <button type="button" class="user-role-switch__option" data-role-target="admin" role="menuitem">
-                        관리자
-                    </button>
+                <div class="nav-utils">
+                    <div class="user-role-switch" id="userRoleSwitch">
+                        <button type="button"
+                                class="user-role-switch__trigger"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                aria-controls="userRoleMenu">
+                            <span class="sr-only">役割切替</span>
+                            <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                                <path d="M12 12c2.7 0 4.8-2.3 4.8-5.1S14.7 1.8 12 1.8 7.2 4.1 7.2 6.9 9.3 12 12 12zm0 2.4c-3.5 0-10.2 1.8-10.2 5.4 0 1 .9 2.4 2.1 2.4h16.2c1.2 0 2.1-1.4 2.1-2.4 0-3.6-6.7-5.4-10.2-5.4z" />
+                            </svg>
+                            <span class="user-role-switch__label" data-role-label>一般会員</span>
+                        </button>
+                        <div class="user-role-switch__menu" id="userRoleMenu" role="menu">
+                            <button type="button" class="user-role-switch__option" data-role-target="user" role="menuitem">
+                                一般会員
+                            </button>
+                            <button type="button" class="user-role-switch__option" data-role-target="admin" role="menuitem">
+                                管理者
+                            </button>
+                        </div>
+                    </div>
+                    <div class="language-selector" id="languageSelector">
+                        <button type="button"
+                                class="language-selector__trigger"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                aria-label="言語選択"
+                                data-current-lang>
+                            🇯🇵
+                        </button>
+                        <ul class="language-selector__dropdown" role="menu">
+                            <li>
+                                <button type="button" class="language-selector__option" data-lang="ja" role="menuitem" aria-label="日本語">
+                                    🇯🇵
+                                </button>
+                                <button type="button" class="language-selector__option" data-lang="ko" role="menuitem" aria-label="韓国語">
+                                    🇰🇷
+                                </button>
+                                <button type="button" class="language-selector__option" data-lang="en" role="menuitem" aria-label="English">
+                                    🇺🇸
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="language-selector" id="languageSelector">
-                <button type="button"
-                        class="language-selector__trigger"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        data-current-lang>
-                    한국어
-                </button>
-                <ul class="language-selector__dropdown" role="menu">
-                    <li>
-                        <button type="button" class="language-selector__option" data-lang="ko" role="menuitem">
-                            한국어
+            </nav>
+            <div class="header-utils">
+                <div class="user-role-switch header-utils__item" id="userRoleSwitchDesktop">
+                    <button type="button"
+                            class="user-role-switch__trigger"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            aria-controls="userRoleMenuDesktop">
+                        <span class="sr-only">役割切替</span>
+                        <svg aria-hidden="true" viewBox="0 0 24 24" focusable="false">
+                            <path d="M12 12c2.7 0 4.8-2.3 4.8-5.1S14.7 1.8 12 1.8 7.2 4.1 7.2 6.9 9.3 12 12 12zm0 2.4c-3.5 0-10.2 1.8-10.2 5.4 0 1 .9 2.4 2.1 2.4h16.2c1.2 0 2.1-1.4 2.1-2.4 0-3.6-6.7-5.4-10.2-5.4z" />
+                        </svg>
+                        <span class="user-role-switch__label" data-role-label>一般会員</span>
+                    </button>
+                    <div class="user-role-switch__menu" id="userRoleMenuDesktop" role="menu">
+                        <button type="button" class="user-role-switch__option" data-role-target="user" role="menuitem">
+                            一般会員
                         </button>
-                    </li>
-                    <li>
-                        <button type="button" class="language-selector__option" data-lang="ja" role="menuitem">
-                            日本語
+                        <button type="button" class="user-role-switch__option" data-role-target="admin" role="menuitem">
+                            管理者
                         </button>
-                    </li>
-                    <li>
-                        <button type="button" class="language-selector__option" data-lang="en" role="menuitem">
-                            English
-                        </button>
-                    </li>
-                </ul>
+                    </div>
+                </div>
+                <div class="language-selector header-utils__item" id="languageSelectorDesktop">
+                    <button type="button"
+                            class="language-selector__trigger"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                            aria-label="言語選択"
+                            data-current-lang>
+                        🇯🇵
+                    </button>
+                    <ul class="language-selector__dropdown" role="menu">
+                        <li>
+                            <button type="button" class="language-selector__option" data-lang="ja" role="menuitem" aria-label="日本語">
+                                🇯🇵
+                            </button>
+                            <button type="button" class="language-selector__option" data-lang="ko" role="menuitem" aria-label="韓国語">
+                                🇰🇷
+                            </button>
+                            <button type="button" class="language-selector__option" data-lang="en" role="menuitem" aria-label="English">
+                                🇺🇸
+                            </button>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </header>
@@ -87,7 +133,7 @@
         <div class="section-mount" data-include="sections/products.html"></div>
         <div class="section-mount" data-include="sections/cs-banner.html"></div>
         <noscript>
-            <p class="no-js-message">JavaScript가 비활성화되어 있어 콘텐츠를 불러올 수 없습니다.</p>
+            <p class="no-js-message">JavaScriptが無効になっているため、コンテンツを読み込めません。</p>
         </noscript>
     </main>
 
@@ -96,17 +142,17 @@
         <div class="footer-container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h4 data-i18n="footer.companyInfo">회사 정보</h4>
-                    <p><strong data-i18n="footer.companyName">회사명</strong> <span data-i18n="footer.companyNameValue">(주)미진화장품</span></p>
-                    <p><strong data-i18n="footer.ceo">대표자</strong> <span data-i18n="footer.ceoValue">장원표</span></p>
-                    <p><strong data-i18n="footer.address">주소</strong> <span data-i18n="footer.addressValue">경상북도 구미시 1공단로 6길 53-45</span></p>
-                    <p><strong data-i18n="footer.businessNumber">사업자등록번호</strong> <span data-i18n="footer.businessNumberValue">264-81-51849</span></p>
-                    <p><strong data-i18n="footer.salesNumber">통신판매업신고 번호</strong> <span data-i18n="footer.salesNumberValue">제2011-경북구미-0026호</span></p>
-                    <p><strong data-i18n="footer.email">이메일</strong> <a href="mailto:mijin_kor@mjcare.co.kr" style="color: #fe6b00;">mijin_kor@mjcare.co.kr</a></p>
+                    <h4 data-i18n="footer.companyInfo">会社情報</h4>
+                    <p><strong data-i18n="footer.companyName">会社名</strong> <span data-i18n="footer.companyNameValue">（株）ミジン化粧品</span></p>
+                    <p><strong data-i18n="footer.ceo">代表者</strong> <span data-i18n="footer.ceoValue">장원표</span></p>
+                    <p><strong data-i18n="footer.address">住所</strong> <span data-i18n="footer.addressValue">경상북도 구미시 1공단로 6길 53-45</span></p>
+                    <p><strong data-i18n="footer.businessNumber">事業者登録番号</strong> <span data-i18n="footer.businessNumberValue">264-81-51849</span></p>
+                    <p><strong data-i18n="footer.salesNumber">通信販売業届出番号</strong> <span data-i18n="footer.salesNumberValue">제2011-경북구미-0026호</span></p>
+                    <p><strong data-i18n="footer.email">メール</strong> <a href="mailto:mijin_kor@mjcare.co.kr" style="color: #fe6b00;">mijin_kor@mjcare.co.kr</a></p>
                     <p style="margin-top: 20px;" data-i18n="footer.copyright">COPYRIGHT MIJIN COSMETICS. ALL RIGHTS RESERVED.</p>
                 </div>
                 <div class="footer-section">
-                    <h4 data-i18n="footer.quickLinks">빠른 링크</h4>
+                    <h4 data-i18n="footer.quickLinks">クイックリンク</h4>
                     <ul class="footer-links">
                         <li><a href="/about" data-i18n="nav.about">ABOUT US</a></li>
                         <li><a href="/business" data-i18n="nav.business">BUSINESS</a></li>
@@ -119,10 +165,10 @@
                 <div class="footer-section">
                     <h4 data-i18n="footer.csCenter">CS CENTER</h4>
                     <p style="font-size: 24px; font-weight: bold; margin-bottom: 20px;" data-i18n="footer.phone">054.461.8081</p>
-                    <p><strong data-i18n="footer.weekday">평일</strong> <span data-i18n="footer.weekdayHours">09:00 - 18:00</span></p>
-                    <p><strong data-i18n="footer.lunch">점심시간</strong> <span data-i18n="footer.lunchHours">13:00 - 14:00</span></p>
-                    <p><strong data-i18n="footer.closed">휴무안내</strong> <span data-i18n="footer.closedDays">토, 일, 공휴일</span></p>
-                    <p style="font-size: 12px; margin-top: 10px;" data-i18n="footer.weekendNote">*주말 및 공휴일에는 1:1문의로 남겨주세요</p>
+                    <p><strong data-i18n="footer.weekday">平日</strong> <span data-i18n="footer.weekdayHours">09:00 - 18:00</span></p>
+                    <p><strong data-i18n="footer.lunch">昼休み</strong> <span data-i18n="footer.lunchHours">13:00 - 14:00</span></p>
+                    <p><strong data-i18n="footer.closed">休業案内</strong> <span data-i18n="footer.closedDays">土、日、祝日</span></p>
+                    <p style="font-size: 12px; margin-top: 10px;" data-i18n="footer.weekendNote">*週末および祝日は1:1お問い合わせでお願いします</p>
                     <div class="social-links">
                         <a href="https://www.facebook.com/mijincare" title="Facebook">f</a>
                         <a href="https://www.instagram.com/mijincosmetics_official?igsh=OXQ0ZjA1dDdxOWZ1" title="Instagram">📷</a>
@@ -131,8 +177,8 @@
             </div>
             <div class="footer-bottom">
                 <ul>
-                    <li><a href="/?mode=policy" data-i18n="footer.terms">이용약관</a></li>
-                    <li><a href="/?mode=privacy" data-i18n="footer.privacy">개인정보처리방침</a></li>
+                    <li><a href="/?mode=policy" data-i18n="footer.terms">利用規約</a></li>
+                    <li><a href="/?mode=privacy" data-i18n="footer.privacy">個人情報処理方針</a></li>
                 </ul>
                 <p data-i18n="footer.copyright">COPYRIGHT MIJIN COSMETICS. ALL RIGHTS RESERVED.</p>
             </div>
@@ -150,7 +196,7 @@
     <script src="js/nav.js"></script>
     <script src="js/admin-ui.js"></script>
     <script>
-        // Placeholder 업데이트를 위한 추가 스크립트
+        // Placeholder更新のための追加スクリプト
         (function() {
             function updatePlaceholders() {
                 if (!window.I18n) return;
@@ -162,7 +208,7 @@
                 });
             }
             
-            // I18n 초기화 후 placeholder 업데이트
+            // I18n初期化後placeholder更新
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', () => {
                     setTimeout(updatePlaceholders, 100);
@@ -171,7 +217,7 @@
                 setTimeout(updatePlaceholders, 100);
             }
             
-            // 언어 변경 시 placeholder 업데이트
+            // 言語変更時placeholder更新
             const originalSetLanguage = window.I18n?.setLanguage;
             if (originalSetLanguage) {
                 window.I18n.setLanguage = function(lang) {

@@ -22,7 +22,10 @@ const TRANSLATIONS = {
             description1: '미진화장품은 시트 마스크팩 제조 및 판매,',
             description2: 'OEM/ODM 전문기업으로서 국내외 유통망을 통해',
             description3: '전세계의 고객들에게 다가가고 있습니다.',
-            highlightDescription: '전문 인증을 통한 안정적인 글로벌 수출'
+            highlightDescription: '전문 인증을 통한 안정적인 글로벌 수출',
+            manage: '히어로 콘텐츠 관리',
+            imageUrlLabel: '背景画像URL',
+            imageUploadHelp: 'URL을 입력하거나 이미지를 업로드하세요'
         },
         intro: {
             eyebrow: 'ABOUT US',
@@ -157,7 +160,10 @@ const TRANSLATIONS = {
             description1: 'ミジン化粧品はシートマスクパックの製造・販売、',
             description2: 'OEM/ODM専門企業として国内外の流通網を通じて',
             description3: '世界中のお客様にアプローチしています。',
-            highlightDescription: '専門認証を通じた安定的なグローバル輸出'
+            highlightDescription: '専門認証を通じた安定的なグローバル輸出',
+            manage: 'ヒーローコンテンツ管理',
+            imageUrlLabel: '背景画像URL',
+            imageUploadHelp: 'URLを入力するか、画像をアップロードしてください'
         },
         intro: {
             eyebrow: 'ABOUT US',
@@ -288,7 +294,10 @@ const TRANSLATIONS = {
             description1: 'MIJIN COSMETICS manufactures and sells sheet mask packs,',
             description2: 'and as an OEM/ODM specialized company, we reach out to',
             description3: 'customers worldwide through domestic and international distribution networks.',
-            highlightDescription: 'Stable global exports backed by international certifications'
+            highlightDescription: 'Stable global exports backed by international certifications',
+            manage: 'Hero Content Management',
+            imageUrlLabel: 'Background Image URL',
+            imageUploadHelp: 'Enter a URL or upload an image'
         },
         intro: {
             eyebrow: 'ABOUT US',

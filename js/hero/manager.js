@@ -1,5 +1,17 @@
 (function () {
     const STORAGE_KEY = 'mjcare.heroSlides';
+    
+    // DB 설정 로드 확인
+    if (!window.DB_CONFIG) {
+        console.error('DB_CONFIG not loaded');
+    }
+    
+    const {
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY,
+        SUPABASE_BUCKET,
+        SUPABASE_FOLDER
+    } = window.DB_CONFIG || {};
     const DEFAULT_SLIDES = [
         {
             imageUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=80',
@@ -164,6 +176,8 @@
             const form = document.getElementById('heroAdminForm');
             const slideSelect = document.getElementById('heroSlideSelect');
             const resetBtn = document.getElementById('heroAdminReset');
+            const imageFileInput = document.getElementById('heroImageFile');
+            const imageUrlInput = form?.elements?.imageUrl;
 
             if (!sliderRoot || !viewport || !dotsContainer) return;
             if (sliderRoot.dataset.heroManaged === 'true') return;
@@ -171,6 +185,12 @@
 
             let slidesData = loadSlides();
             let selectedIndex = 0;
+            
+            // Supabase 클라이언트 초기화 (DB_CONFIG가 있는 경우)
+            let supabaseClient = null;
+            if (SUPABASE_URL && SUPABASE_ANON_KEY && typeof supabase !== 'undefined') {
+                supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            }
 
             function renderDots() {
                 dotsContainer.innerHTML = slidesData
@@ -238,6 +258,86 @@
                 }
             }
 
+            async function uploadImageFile(file) {
+                if (!supabaseClient || !SUPABASE_BUCKET) {
+                    alert('이미지 업로드 기능을 사용할 수 없습니다. DB 설정을 확인해주세요.');
+                    return null;
+                }
+
+                try {
+                    // 파일 크기 검증 (10MB 제한)
+                    const maxSize = 10 * 1024 * 1024; // 10MB
+                    if (file.size > maxSize) {
+                        alert('파일 크기가 너무 큽니다. 10MB 이하의 파일만 업로드할 수 있습니다.');
+                        return null;
+                    }
+
+                    // 파일 형식 검증
+                    if (!file.type.startsWith('image/')) {
+                        alert('이미지 파일만 업로드할 수 있습니다.');
+                        return null;
+                    }
+
+                    const sanitizedName = `hero-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '-')}`;
+                    const storagePath = SUPABASE_FOLDER ? `${SUPABASE_FOLDER}/${sanitizedName}` : sanitizedName;
+
+                    const { data, error } = await supabaseClient
+                        .storage
+                        .from(SUPABASE_BUCKET)
+                        .upload(storagePath, file, {
+                            cacheControl: '3600',
+                            upsert: false
+                        });
+
+                    if (error) {
+                        console.error('업로드 에러:', error);
+                        let errorMessage = '이미지 업로드에 실패했습니다.';
+                        if (error.message?.includes('already exists')) {
+                            errorMessage = '이미 같은 이름의 파일이 존재합니다.';
+                        } else if (error.message?.includes('permission') || error.message?.includes('unauthorized')) {
+                            errorMessage = '업로드 권한이 없습니다.';
+                        }
+                        alert(errorMessage);
+                        return null;
+                    }
+
+                    // 업로드된 파일의 공개 URL 생성
+                    const { data: signedData } = await supabaseClient
+                        .storage
+                        .from(SUPABASE_BUCKET)
+                        .createSignedUrl(storagePath, 3600);
+
+                    if (signedData?.signedUrl) {
+                        return signedData.signedUrl;
+                    }
+
+                    // 공개 URL이 없는 경우 기본 URL 생성
+                    const { data: publicData } = supabaseClient
+                        .storage
+                        .from(SUPABASE_BUCKET)
+                        .getPublicUrl(storagePath);
+
+                    return publicData?.publicUrl || null;
+                } catch (err) {
+                    console.error('예상치 못한 에러 발생:', err);
+                    alert('업로드 중 예상치 못한 에러가 발생했습니다.');
+                    return null;
+                }
+            }
+
+            async function handleImageFileChange(event) {
+                const file = event.target.files?.[0];
+                if (!file || !imageUrlInput) return;
+
+                const uploadedUrl = await uploadImageFile(file);
+                if (uploadedUrl) {
+                    imageUrlInput.value = uploadedUrl;
+                    updateSlideField('imageUrl', uploadedUrl);
+                    // 파일 입력 초기화
+                    event.target.value = '';
+                }
+            }
+
             function updateSlideField(name, value) {
                 const targetSlide = slidesData[selectedIndex];
                 if (!targetSlide || !(name in targetSlide || name === 'overlayOpacity')) return;
@@ -283,6 +383,7 @@
             form?.addEventListener('input', handleFormChange);
             form?.addEventListener('change', handleFormChange);
             resetBtn?.addEventListener('click', resetSlides);
+            imageFileInput?.addEventListener('change', handleImageFileChange);
         }
 
         return { boot };
