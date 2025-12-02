@@ -12,6 +12,10 @@
         SUPABASE_BUCKET,
         SUPABASE_FOLDER
     } = window.DB_CONFIG || {};
+    
+    // Hero 전용 폴더 경로
+    const HERO_FOLDER = 'home/hero';
+    const HERO_DATA_FILE = 'slides.json';
     const DEFAULT_SLIDES = [
         {
             imageUrl: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=1600&q=80',
@@ -140,7 +144,61 @@
     }
 
     const HeroManager = (() => {
-        function loadSlides() {
+        async function loadSlidesFromSupabase(supabaseClient) {
+            if (!supabaseClient || !SUPABASE_BUCKET) {
+                return null;
+            }
+
+            try {
+                const filePath = `${HERO_FOLDER}/${HERO_DATA_FILE}`;
+                
+                // Supabase Storage에서 JSON 파일 다운로드
+                const { data, error } = await supabaseClient
+                    .storage
+                    .from(SUPABASE_BUCKET)
+                    .download(filePath);
+
+                if (error) {
+                    // 파일이 없으면 null 반환 (에러가 아닌 경우)
+                    if (error.message?.includes('not found') || error.statusCode === '404') {
+                        return null;
+                    }
+                    console.warn('Supabase에서 슬라이드 데이터를 불러오지 못했습니다:', error);
+                    return null;
+                }
+
+                // Blob을 텍스트로 변환
+                const text = await data.text();
+                const parsed = JSON.parse(text);
+                
+                if (Array.isArray(parsed) && parsed.length) {
+                    return parsed.map((slide, index) => ({
+                        ...clone(DEFAULT_SLIDES[index] || DEFAULT_SLIDES[0]),
+                        ...slide
+                    }));
+                }
+            } catch (error) {
+                console.warn('Supabase 슬라이드 데이터 파싱 실패:', error);
+            }
+            return null;
+        }
+
+        async function loadSlides(supabaseClient) {
+            // 1. Supabase에서 먼저 시도
+            if (supabaseClient) {
+                const supabaseData = await loadSlidesFromSupabase(supabaseClient);
+                if (supabaseData) {
+                    // Supabase 데이터를 localStorage에도 백업
+                    try {
+                        window.localStorage?.setItem(STORAGE_KEY, JSON.stringify(supabaseData));
+                    } catch (e) {
+                        console.warn('localStorage 백업 실패:', e);
+                    }
+                    return supabaseData;
+                }
+            }
+
+            // 2. Supabase 실패 시 localStorage에서 불러오기
             try {
                 const stored = window.localStorage?.getItem(STORAGE_KEY);
                 if (!stored) return clone(DEFAULT_SLIDES);
@@ -152,16 +210,58 @@
                     }));
                 }
             } catch (error) {
-                console.warn('히어로 슬라이드 데이터를 불러오지 못했습니다.', error);
+                console.warn('localStorage에서 슬라이드 데이터를 불러오지 못했습니다.', error);
             }
+            
+            // 3. 모두 실패 시 기본값 반환
             return clone(DEFAULT_SLIDES);
         }
 
-        function saveSlides(slides) {
+        async function saveSlidesToSupabase(slides, supabaseClient) {
+            if (!supabaseClient || !SUPABASE_BUCKET) {
+                return false;
+            }
+
+            try {
+                const filePath = `${HERO_FOLDER}/${HERO_DATA_FILE}`;
+                const jsonData = JSON.stringify(slides, null, 2);
+                const blob = new Blob([jsonData], { type: 'application/json' });
+
+                const { error } = await supabaseClient
+                    .storage
+                    .from(SUPABASE_BUCKET)
+                    .upload(filePath, blob, {
+                        cacheControl: '3600',
+                        upsert: true,
+                        contentType: 'application/json'
+                    });
+
+                if (error) {
+                    console.error('Supabase에 슬라이드 데이터 저장 실패:', error);
+                    return false;
+                }
+
+                return true;
+            } catch (error) {
+                console.error('Supabase 저장 중 예상치 못한 에러:', error);
+                return false;
+            }
+        }
+
+        async function saveSlides(slides, supabaseClient) {
+            // 1. Supabase에 저장 시도
+            if (supabaseClient) {
+                const success = await saveSlidesToSupabase(slides, supabaseClient);
+                if (!success) {
+                    console.warn('Supabase 저장 실패, localStorage에만 저장합니다.');
+                }
+            }
+
+            // 2. localStorage에도 백업 저장
             try {
                 window.localStorage?.setItem(STORAGE_KEY, JSON.stringify(slides));
             } catch (error) {
-                console.warn('히어로 슬라이드 데이터를 저장하지 못했습니다.', error);
+                console.warn('localStorage에 슬라이드 데이터를 저장하지 못했습니다.', error);
             }
         }
 
@@ -182,14 +282,30 @@
             if (sliderRoot.dataset.heroManaged === 'true') return;
             sliderRoot.dataset.heroManaged = 'true';
 
-            let slidesData = loadSlides();
-            let selectedIndex = 0;
-            
             // Supabase 클라이언트 초기화 (DB_CONFIG가 있는 경우)
             let supabaseClient = null;
             if (SUPABASE_URL && SUPABASE_ANON_KEY && typeof supabase !== 'undefined') {
                 supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
             }
+
+            let slidesData = clone(DEFAULT_SLIDES);
+            let selectedIndex = 0;
+            
+            // 초기 렌더링 (기본값으로 먼저 표시)
+            renderSlides();
+            populateSelect();
+            hydrateForm();
+            
+            // Supabase에서 슬라이드 데이터 비동기 로드
+            (async () => {
+                const loaded = await loadSlides(supabaseClient);
+                if (loaded && Array.isArray(loaded) && loaded.length) {
+                    slidesData = loaded;
+                    renderSlides();
+                    populateSelect();
+                    hydrateForm();
+                }
+            })();
 
             function renderDots() {
                 dotsContainer.innerHTML = slidesData
@@ -278,7 +394,7 @@
                     }
 
                     const sanitizedName = `hero-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '-')}`;
-                    const storagePath = SUPABASE_FOLDER ? `${SUPABASE_FOLDER}/${sanitizedName}` : sanitizedName;
+                    const storagePath = `${HERO_FOLDER}/${sanitizedName}`;
 
                     const { data, error } = await supabaseClient
                         .storage
@@ -331,13 +447,13 @@
                 const uploadedUrl = await uploadImageFile(file);
                 if (uploadedUrl) {
                     imageUrlInput.value = uploadedUrl;
-                    updateSlideField('imageUrl', uploadedUrl);
+                    await updateSlideField('imageUrl', uploadedUrl);
                     // 파일 입력 초기화
                     event.target.value = '';
                 }
             }
 
-            function updateSlideField(name, value) {
+            async function updateSlideField(name, value) {
                 const targetSlide = slidesData[selectedIndex];
                 if (!targetSlide) return;
 
@@ -345,12 +461,12 @@
                 const allowedFields = ['imageUrl', 'title', 'description', 'buttonLabel', 'buttonLink'];
                 if (allowedFields.includes(name)) {
                     targetSlide[name] = value;
-                    saveSlides(slidesData);
+                    await saveSlides(slidesData, supabaseClient);
                     renderSlides();
                 }
             }
 
-            function handleFormChange(event) {
+            async function handleFormChange(event) {
                 const { name, value } = event.target;
                 if (!name) return;
 
@@ -360,7 +476,7 @@
                     return;
                 }
 
-                updateSlideField(name, value);
+                await updateSlideField(name, value);
             }
 
             function createNewSlide() {
@@ -374,27 +490,27 @@
                 });
             }
 
-            function addSlide() {
+            async function addSlide() {
                 const newSlide = createNewSlide();
                 slidesData.push(newSlide);
                 selectedIndex = slidesData.length - 1;
-                saveSlides(slidesData);
+                await saveSlides(slidesData, supabaseClient);
                 populateSelect();
                 hydrateForm();
                 renderSlides();
             }
 
-            function insertSlide() {
+            async function insertSlide() {
                 const newSlide = createNewSlide();
                 slidesData.splice(selectedIndex + 1, 0, newSlide);
                 selectedIndex = selectedIndex + 1;
-                saveSlides(slidesData);
+                await saveSlides(slidesData, supabaseClient);
                 populateSelect();
                 hydrateForm();
                 renderSlides();
             }
 
-            function deleteSlide() {
+            async function deleteSlide() {
                 if (slidesData.length <= 1) {
                     alert('최소 1개의 슬라이드는 유지해야 합니다.');
                     return;
@@ -412,25 +528,21 @@
                     selectedIndex = slidesData.length - 1;
                 }
 
-                saveSlides(slidesData);
+                await saveSlides(slidesData, supabaseClient);
                 populateSelect();
                 hydrateForm();
                 renderSlides();
             }
 
-            function resetSlides() {
+            async function resetSlides() {
                 if (!window.confirm('히어로 슬라이드를 기본값으로 복원할까요?')) return;
                 slidesData = clone(DEFAULT_SLIDES);
                 selectedIndex = 0;
-                saveSlides(slidesData);
+                await saveSlides(slidesData, supabaseClient);
                 populateSelect();
                 hydrateForm();
                 renderSlides();
             }
-
-            renderSlides();
-            populateSelect();
-            hydrateForm();
 
             slideSelect?.addEventListener('change', handleFormChange);
             form?.addEventListener('input', handleFormChange);
