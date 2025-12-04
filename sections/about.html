@@ -1,0 +1,151 @@
+<section class="about-section">
+    <div class="about-container">
+        <div class="about-header">
+            <h1 class="about-title" data-i18n="aboutPage.title">MIJIN COSMETICS.</h1>
+            <h2 class="about-subtitle" data-i18n="aboutPage.subtitle">회사소개</h2>
+        </div>
+        
+        <div class="about-content">
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        <strong data-i18n="aboutPage.companyName">(주)미진화장품</strong>
+                        <span data-i18n="aboutPage.paragraph1">은, 마스크팩 연구개발 및</span>
+                    </p>
+                    <p data-i18n="aboutPage.paragraph2">OEM, ODM 전문업체로 시작하여,</p>
+                    <p data-i18n="aboutPage.paragraph3">스킨케어 라인까지 확장한 글로벌 뷰티 기업입니다.</p>
+                    <p data-i18n="aboutPage.paragraph4">고객의 피부 고민을 해결하고,</p>
+                    <p data-i18n="aboutPage.paragraph5">본연의 아름다움을 되찾을 수 있도록 돕는 것이</p>
+                    <p data-i18n="aboutPage.paragraph6">우리의 핵심 가치입니다.</p>
+                    <p class="about-spacer"></p>
+                    <p>
+                        <strong data-i18n="aboutPage.paragraph7">"합리적인 가격에 간편하면서도 효과적인 제품"</strong>
+                    </p>
+                    <p data-i18n="aboutPage.paragraph8">이라는 철학을 바탕으로, 뛰어난 품질과</p>
+                    <p data-i18n="aboutPage.paragraph9">혁신적인 기술력을 제공하는 것을 목표로 하고 있습니다.</p>
+                    <p data-i18n="aboutPage.paragraph10">그동안의 노하우와 기술력 바탕으로</p>
+                    <p data-i18n="aboutPage.paragraph11">많은 고객들의 신뢰를 얻었으며,</p>
+                    <p data-i18n="aboutPage.paragraph12">여러 종류의 기초 제품까지 범위를 확장하여</p>
+                    <p data-i18n="aboutPage.paragraph13">더욱 다양화된 뷰티 솔루션을 선보이고 있습니다.</p>
+                </div>
+                
+                <div class="about-image-wrapper">
+                    <img src="" alt="MIJIN COSMETICS" class="about-image" id="aboutImage1" loading="lazy">
+                </div>
+            </div>
+            
+            <div class="about-grid about-grid--reverse">
+                <div class="about-text">
+                    <p>
+                        <strong data-i18n="aboutPage.companyName">(주)미진화장품</strong>
+                        <span data-i18n="aboutPage.paragraph14">은 지속적인 연구개발과</span>
+                    </p>
+                    <p data-i18n="aboutPage.paragraph15">최신 트렌드를 반영한 제품을 통해,</p>
+                    <p data-i18n="aboutPage.paragraph16">전 세계적으로 피부 건강과 아름다움을 추구하는</p>
+                    <p data-i18n="aboutPage.paragraph17">소비자들의 기대를 뛰어넘는 브랜드로</p>
+                    <p data-i18n="aboutPage.paragraph18">자리잡고 있습니다.</p>
+                    <p class="about-spacer"></p>
+                    <p data-i18n="aboutPage.paragraph19">앞으로도 끊임없이 변화하는 글로벌 뷰티 시장에서,</p>
+                    <p data-i18n="aboutPage.paragraph20">혁신적인 제품과 차별화된 가치를 제공하며,</p>
+                    <p data-i18n="aboutPage.paragraph21">전 세계 고객들에게 사랑받는 브랜드로</p>
+                    <p data-i18n="aboutPage.paragraph22">성장해 나갈 것입니다.</p>
+                </div>
+                
+                <div class="about-image-wrapper">
+                    <img src="" alt="MIJIN COSMETICS" class="about-image" id="aboutImage2" loading="lazy">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// 랜덤 이미지 생성 함수
+(function() {
+    // 뷰티/화장품 관련 이미지 ID들 (Unsplash)
+    const imageIds = [
+        '1596462502278-4bf3a3a0b908', // beauty products
+        '1556229010-6c3f1c8f5c8a', // skincare
+        '1556228578-76d9c85bf2a4', // cosmetics
+        '1596464716357-fa1c0e0c8b5a', // beauty
+        '1571875257727-256c39da42af', // spa
+        '1571875257727-256c39da42af', // wellness
+        '1608248543803-ba0c8e0c7c9a', // natural beauty
+        '1608544969503-8e5a0b5c8b5a', // luxury cosmetics
+        '1608544969503-8e5a0b5c8b5a', // organic skincare
+        '1608544969503-8e5a0b5c8b5a'  // beauty treatment
+    ];
+    
+    function getRandomImage() {
+        // 여러 이미지 소스 옵션
+        const randomId = imageIds[Math.floor(Math.random() * imageIds.length)];
+        const randomSeed = Math.floor(Math.random() * 10000);
+        
+        // 옵션 1: Unsplash (랜덤)
+        const unsplashUrl = `https://images.unsplash.com/photo-${randomId}?w=800&h=600&fit=crop&auto=format`;
+        
+        // 옵션 2: Picsum Photos (랜덤)
+        const picsumUrl = `https://picsum.photos/800/600?random=${randomSeed}`;
+        
+        // 옵션 3: Placeholder.com (랜덤 색상)
+        const placeholderUrl = `https://via.placeholder.com/800x600/${Math.floor(Math.random()*16777215).toString(16)}/ffffff?text=MIJIN+COSMETICS`;
+        
+        // 랜덤하게 선택
+        const sources = [unsplashUrl, picsumUrl, placeholderUrl];
+        return sources[Math.floor(Math.random() * sources.length)];
+    }
+    
+    function loadRandomImages() {
+        const img1 = document.getElementById('aboutImage1');
+        const img2 = document.getElementById('aboutImage2');
+        
+        if (img1) {
+            img1.src = getRandomImage();
+            img1.onerror = function() {
+                // 실패 시 Picsum Photos로 폴백
+                this.src = `https://picsum.photos/800/600?random=${Math.floor(Math.random() * 10000)}`;
+            };
+        }
+        
+        if (img2) {
+            img2.src = getRandomImage();
+            img2.onerror = function() {
+                // 실패 시 Picsum Photos로 폴백
+                this.src = `https://picsum.photos/800/600?random=${Math.floor(Math.random() * 10000)}`;
+            };
+        }
+    }
+    
+    // DOM 로드 후 실행
+    function initImages() {
+        setTimeout(loadRandomImages, 100);
+    }
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initImages);
+    } else {
+        initImages();
+    }
+    
+    // 섹션이 동적으로 로드되는 경우를 대비
+    const observer = new MutationObserver(function(mutations) {
+        const img1 = document.getElementById('aboutImage1');
+        const img2 = document.getElementById('aboutImage2');
+        if ((img1 && !img1.src) || (img2 && !img2.src)) {
+            initImages();
+        }
+    });
+    
+    const main = document.getElementById('pageMain');
+    if (main) {
+        observer.observe(main, { childList: true, subtree: true });
+    }
+    
+    // 섹션 로드 이벤트 리스너
+    document.addEventListener('sections:ready', function() {
+        setTimeout(loadRandomImages, 200);
+    });
+})();
+</script>
+
+

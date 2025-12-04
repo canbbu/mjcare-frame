@@ -4,6 +4,7 @@
 @import url('./sections/certifications.css');
 @import url('./sections/products.css');
 @import url('./sections/cs-banner.css');
+@import url('./sections/about.css');
 
 :root {
     --color-bg: #ffffff;

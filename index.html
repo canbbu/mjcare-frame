@@ -127,11 +127,7 @@
     <div class="nav-overlay" id="navOverlay" hidden></div>
 
     <main id="pageMain">
-        <div class="section-mount" data-include="sections/hero.html"></div>
-        <div class="section-mount" data-include="sections/intro.html"></div>
-        <div class="section-mount" data-include="sections/certifications.html"></div>
-        <div class="section-mount" data-include="sections/products.html"></div>
-        <div class="section-mount" data-include="sections/cs-banner.html"></div>
+        <!-- 섹션은 router.js에 의해 동적으로 로드됩니다 -->
         <noscript>
             <p class="no-js-message">JavaScriptが無効になっているため、コンテンツを読み込めません。</p>
         </noscript>
@@ -188,6 +184,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="config/db-config.js"></script>
     <script src="i18n/translations.js"></script>
+    <script src="js/router.js"></script>
     <script src="js/section-loader.js"></script>
     <script src="js/i18n.js"></script>
     <script src="js/products.js"></script>
