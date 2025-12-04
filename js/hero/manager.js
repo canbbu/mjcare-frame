@@ -336,13 +336,23 @@
                 }
 
                 try {
+                    // products.js와 동일한 방식: 경로가 폴더를 포함하지 않으면 HERO_FOLDER 추가
+                    let filePath = imagePath;
+                    if (!filePath.includes('/')) {
+                        // 파일명만 있는 경우 HERO_FOLDER 추가
+                        filePath = `${HERO_FOLDER}/${filePath}`;
+                    } else if (!filePath.startsWith(HERO_FOLDER) && !filePath.startsWith(SUPABASE_FOLDER)) {
+                        // 경로가 있지만 HERO_FOLDER나 SUPABASE_FOLDER로 시작하지 않으면 HERO_FOLDER 추가
+                        filePath = `${HERO_FOLDER}/${filePath}`;
+                    }
+
                     const { data: signedData, error: signedError } = await supabaseClient
                         .storage
                         .from(SUPABASE_BUCKET)
-                        .createSignedUrl(imagePath, SIGNED_URL_TTL || 3600);
+                        .createSignedUrl(filePath, SIGNED_URL_TTL || 3600);
 
                     if (signedError || !signedData?.signedUrl) {
-                        console.error('Signed URL 생성 실패:', signedError || '알 수 없는 에러');
+                        console.error('Signed URL 생성 실패:', signedError || '알 수 없는 에러', '경로:', filePath);
                         return imagePath; // 실패 시 원본 경로 반환
                     }
 

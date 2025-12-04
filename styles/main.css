@@ -156,7 +156,6 @@ nav .nav-main {
 .nav-dropdown:hover .nav-dropdown__menu {
     opacity: 1;
     visibility: visible;
-    transform: translateX(-50%) translateY(0);
 }
 
 .nav-dropdown__menu li {
@@ -395,6 +394,7 @@ body.nav-open .nav-overlay {
         z-index: 1500;
         transition: left 0.3s ease;
         overflow-y: auto;
+        overflow-x: visible;
         margin-left: 0;
         padding: 80px 20px 20px;
         display: flex;
@@ -411,38 +411,80 @@ body.nav-open .nav-overlay {
     nav .nav-main li {
         width: 100%;
         border-bottom: 1px solid var(--color-border);
+        position: relative;
     }
 
     nav .nav-main a {
         display: block;
-        padding: 16px 0;
+        padding: 16px 20px;
         font-size: clamp(0.9rem, 2.5vw, 1rem);
     }
 
     /* Mobile Dropdown */
-    .nav-dropdown__menu {
+    nav .nav-dropdown {
+        position: relative;
+    }
+
+    nav .nav-dropdown__trigger {
+        padding: 16px 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    nav .nav-dropdown__menu {
         position: static;
+        left: auto;
+        right: auto;
+        top: auto;
         transform: none;
-        opacity: 1;
-        visibility: visible;
+        width: 100%;
+        max-height: 0;
+        opacity: 0;
+        visibility: hidden;
         box-shadow: none;
         border: none;
         border-top: 1px solid var(--color-border);
         border-radius: 0;
-        margin-top: 0;
+        margin: 0;
         padding: 0;
         background: var(--color-surface);
+        transition: max-height 0.3s ease, opacity 0.2s ease, padding 0.3s ease, visibility 0.2s ease;
+        z-index: 2000;
+        white-space: normal;
+        overflow: hidden;
+        list-style: none;
     }
 
-    .nav-dropdown__menu li {
+    nav .nav-dropdown:hover .nav-dropdown__menu,
+    nav .nav-dropdown.is-open .nav-dropdown__menu {
+        max-height: 500px;
+        opacity: 1;
+        visibility: visible;
+        padding: 8px 0;
+    }
+
+    nav .nav-dropdown__menu li {
+        width: 100%;
+        margin: 0;
+        padding: 0;
         border-bottom: 1px solid var(--color-border);
+        list-style: none;
     }
 
-    .nav-dropdown__menu a {
-        padding: 12px 20px;
-        padding-left: 32px;
-        font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    nav .nav-dropdown__menu li:last-child {
+        border-bottom: none;
     }
+
+    nav .nav-dropdown__menu a {
+        display: block;
+        width: 100%;
+        padding: 12px 20px;
+        padding-left: 40px;
+        font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+        box-sizing: border-box;
+        margin: 0;
+    }
+
 
     .nav-dropdown__trigger::after {
         margin-left: auto;
