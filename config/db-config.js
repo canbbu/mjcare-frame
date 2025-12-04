@@ -15,5 +15,27 @@ const DB_CONFIG = {
 // 전역에서 사용할 수 있도록 export (IIFE 패턴 사용 시)
 if (typeof window !== 'undefined') {
     window.DB_CONFIG = DB_CONFIG;
+    
+    // 전역 Supabase 클라이언트 생성 (중복 인스턴스 방지)
+    function initSupabaseClient() {
+        if (window.supabaseClient) {
+            return; // 이미 생성됨
+        }
+        
+        if (typeof supabase !== 'undefined' && DB_CONFIG.SUPABASE_URL && DB_CONFIG.SUPABASE_ANON_KEY) {
+            window.supabaseClient = supabase.createClient(DB_CONFIG.SUPABASE_URL, DB_CONFIG.SUPABASE_ANON_KEY);
+        }
+    }
+    
+    // 즉시 시도
+    initSupabaseClient();
+    
+    // DOMContentLoaded 후에도 시도 (스크립트 로드 순서 문제 대비)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initSupabaseClient);
+    } else {
+        // 이미 로드됨
+        initSupabaseClient();
+    }
 }
 

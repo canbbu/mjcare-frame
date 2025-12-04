@@ -10,7 +10,8 @@
         SUPABASE_URL,
         SUPABASE_ANON_KEY,
         SUPABASE_BUCKET,
-        SUPABASE_FOLDER
+        SUPABASE_FOLDER,
+        SIGNED_URL_TTL
     } = window.DB_CONFIG || {};
     
     // Hero 전용 폴더 경로
@@ -282,26 +283,25 @@
             if (sliderRoot.dataset.heroManaged === 'true') return;
             sliderRoot.dataset.heroManaged = 'true';
 
-            // Supabase 클라이언트 초기화 (DB_CONFIG가 있는 경우)
-            let supabaseClient = null;
-            if (SUPABASE_URL && SUPABASE_ANON_KEY && typeof supabase !== 'undefined') {
-                supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-            }
+            // 전역 Supabase 클라이언트 사용 (중복 인스턴스 방지)
+            let supabaseClient = window.supabaseClient || null;
 
             let slidesData = clone(DEFAULT_SLIDES);
             let selectedIndex = 0;
             
             // 초기 렌더링 (기본값으로 먼저 표시)
-            renderSlides();
-            populateSelect();
-            hydrateForm();
+            (async () => {
+                await renderSlides();
+                populateSelect();
+                hydrateForm();
+            })();
             
             // Supabase에서 슬라이드 데이터 비동기 로드
             (async () => {
                 const loaded = await loadSlides(supabaseClient);
                 if (loaded && Array.isArray(loaded) && loaded.length) {
                     slidesData = loaded;
-                    renderSlides();
+                    await renderSlides();
                     populateSelect();
                     hydrateForm();
                 }
@@ -324,10 +324,55 @@
                     .join('');
             }
 
-            function renderSlides() {
+            async function getImageSignedUrl(imagePath, supabaseClient) {
+                // 외부 URL인 경우 (http:// 또는 https://로 시작) 그대로 반환
+                if (imagePath && (imagePath.startsWith('http://') || imagePath.startsWith('https://'))) {
+                    return imagePath;
+                }
+
+                // Supabase Storage 파일인 경우 Signed URL 생성
+                if (!supabaseClient || !imagePath || !SUPABASE_BUCKET) {
+                    return imagePath || '';
+                }
+
+                try {
+                    const { data: signedData, error: signedError } = await supabaseClient
+                        .storage
+                        .from(SUPABASE_BUCKET)
+                        .createSignedUrl(imagePath, SIGNED_URL_TTL || 3600);
+
+                    if (signedError || !signedData?.signedUrl) {
+                        console.error('Signed URL 생성 실패:', signedError || '알 수 없는 에러');
+                        return imagePath; // 실패 시 원본 경로 반환
+                    }
+
+                    return signedData.signedUrl;
+                } catch (err) {
+                    console.error('Signed URL 생성 중 예상치 못한 에러:', err);
+                    return imagePath; // 실패 시 원본 경로 반환
+                }
+            }
+
+            async function renderSlides() {
+                // 모든 슬라이드의 이미지 URL을 Signed URL로 변환
+                const slidesWithUrls = await Promise.all(
+                    slidesData.map(async (slide) => {
+                        const signedUrl = await getImageSignedUrl(slide.imageUrl || slide.imageFileName, supabaseClient);
+                        return {
+                            ...slide,
+                            imageUrl: signedUrl
+                        };
+                    })
+                );
+
+                // 임시로 slidesData를 업데이트하여 렌더링
+                const originalSlides = slidesData;
+                slidesData = slidesWithUrls;
                 viewport.innerHTML = slidesData.map(createSlideTemplate).join('');
                 renderDots();
                 window.HeroSlider?.init(sliderRoot);
+                // 원본 데이터 복원 (Signed URL은 렌더링에만 사용)
+                slidesData = originalSlides;
             }
 
             function populateSelect() {
@@ -393,7 +438,7 @@
                         return null;
                     }
 
-                    const sanitizedName = `hero-${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '-')}`;
+                    const sanitizedName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '-')}`;
                     const storagePath = `${HERO_FOLDER}/${sanitizedName}`;
 
                     const { data, error } = await supabaseClient
@@ -407,32 +452,27 @@
                     if (error) {
                         console.error('업로드 에러:', error);
                         let errorMessage = '이미지 업로드에 실패했습니다.';
+                        if (error.message) {
+                            errorMessage += '\n\n에러: ' + error.message;
+                        }
+                        if (error.statusCode) {
+                            errorMessage += '\n상태 코드: ' + error.statusCode;
+                        }
                         if (error.message?.includes('already exists')) {
-                            errorMessage = '이미 같은 이름의 파일이 존재합니다.';
+                            errorMessage = '이미 같은 이름의 파일이 존재합니다. 파일명을 변경해주세요.';
+                        } else if (error.message?.includes('size')) {
+                            errorMessage = '파일 크기가 너무 큽니다. 더 작은 파일을 업로드해주세요.';
                         } else if (error.message?.includes('permission') || error.message?.includes('unauthorized')) {
-                            errorMessage = '업로드 권한이 없습니다.';
+                            errorMessage = '업로드 권한이 없습니다. 관리자에게 문의해주세요.';
+                        } else if (error.message?.includes('bucket')) {
+                            errorMessage = '저장소 버킷을 찾을 수 없습니다. 설정을 확인해주세요.';
                         }
                         alert(errorMessage);
                         return null;
                     }
 
-                    // 업로드된 파일의 공개 URL 생성
-                    const { data: signedData } = await supabaseClient
-                        .storage
-                        .from(SUPABASE_BUCKET)
-                        .createSignedUrl(storagePath, 3600);
-
-                    if (signedData?.signedUrl) {
-                        return signedData.signedUrl;
-                    }
-
-                    // 공개 URL이 없는 경우 기본 URL 생성
-                    const { data: publicData } = supabaseClient
-                        .storage
-                        .from(SUPABASE_BUCKET)
-                        .getPublicUrl(storagePath);
-
-                    return publicData?.publicUrl || null;
+                    // products.js 방식: 파일명만 반환 (경로 포함)
+                    return storagePath;
                 } catch (err) {
                     console.error('예상치 못한 에러 발생:', err);
                     alert('업로드 중 예상치 못한 에러가 발생했습니다.');
@@ -444,10 +484,11 @@
                 const file = event.target.files?.[0];
                 if (!file || !imageUrlInput) return;
 
-                const uploadedUrl = await uploadImageFile(file);
-                if (uploadedUrl) {
-                    imageUrlInput.value = uploadedUrl;
-                    await updateSlideField('imageUrl', uploadedUrl);
+                const uploadedPath = await uploadImageFile(file);
+                if (uploadedPath) {
+                    // products.js 방식: 파일 경로만 저장
+                    imageUrlInput.value = uploadedPath;
+                    await updateSlideField('imageUrl', uploadedPath);
                     // 파일 입력 초기화
                     event.target.value = '';
                 }
@@ -462,7 +503,7 @@
                 if (allowedFields.includes(name)) {
                     targetSlide[name] = value;
                     await saveSlides(slidesData, supabaseClient);
-                    renderSlides();
+                    await renderSlides();
                 }
             }
 
@@ -497,7 +538,7 @@
                 await saveSlides(slidesData, supabaseClient);
                 populateSelect();
                 hydrateForm();
-                renderSlides();
+                await renderSlides();
             }
 
             async function insertSlide() {
@@ -507,7 +548,7 @@
                 await saveSlides(slidesData, supabaseClient);
                 populateSelect();
                 hydrateForm();
-                renderSlides();
+                await renderSlides();
             }
 
             async function deleteSlide() {
@@ -531,7 +572,7 @@
                 await saveSlides(slidesData, supabaseClient);
                 populateSelect();
                 hydrateForm();
-                renderSlides();
+                await renderSlides();
             }
 
             async function resetSlides() {
@@ -541,7 +582,7 @@
                 await saveSlides(slidesData, supabaseClient);
                 populateSelect();
                 hydrateForm();
-                renderSlides();
+                await renderSlides();
             }
 
             slideSelect?.addEventListener('change', handleFormChange);

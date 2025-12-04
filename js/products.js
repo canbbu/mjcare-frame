@@ -69,7 +69,8 @@
         }
         productsGrid.dataset.productsBound = 'true';
 
-        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // 전역 Supabase 클라이언트 사용 (중복 인스턴스 방지)
+        supabaseClient = window.supabaseClient || (typeof supabase !== 'undefined' ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null);
 
         init();
 
