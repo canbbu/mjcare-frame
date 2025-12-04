@@ -5,6 +5,7 @@
 @import url('./sections/products.css');
 @import url('./sections/cs-banner.css');
 @import url('./sections/about.css');
+@import url('./sections/page-template.css');
 
 :root {
     --color-bg: #ffffff;
@@ -109,6 +110,72 @@ nav .nav-main {
     justify-content: center;
     margin: 0;
     padding: 0;
+}
+
+/* Dropdown Navigation */
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-dropdown__trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-dropdown__trigger::after {
+    content: '▼';
+    font-size: 0.7em;
+    transition: transform 0.3s ease;
+}
+
+.nav-dropdown:hover .nav-dropdown__trigger::after {
+    transform: rotate(180deg);
+}
+
+.nav-dropdown__menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 200px;
+    list-style: none;
+    margin: 0;
+    padding: 8px 0;
+    background: #fff;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    z-index: 2000;
+}
+
+.nav-dropdown:hover .nav-dropdown__menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.nav-dropdown__menu li {
+    margin: 0;
+    border-bottom: none;
+}
+
+.nav-dropdown__menu a {
+    display: block;
+    padding: 10px 20px;
+    color: var(--color-ink);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.nav-dropdown__menu a:hover {
+    background-color: var(--color-surface);
+    color: var(--color-accent);
 }
 
 /* Nav logo (mobile only) */
@@ -350,6 +417,35 @@ body.nav-open .nav-overlay {
         display: block;
         padding: 16px 0;
         font-size: clamp(0.9rem, 2.5vw, 1rem);
+    }
+
+    /* Mobile Dropdown */
+    .nav-dropdown__menu {
+        position: static;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        box-shadow: none;
+        border: none;
+        border-top: 1px solid var(--color-border);
+        border-radius: 0;
+        margin-top: 0;
+        padding: 0;
+        background: var(--color-surface);
+    }
+
+    .nav-dropdown__menu li {
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .nav-dropdown__menu a {
+        padding: 12px 20px;
+        padding-left: 32px;
+        font-size: clamp(0.85rem, 2.5vw, 0.95rem);
+    }
+
+    .nav-dropdown__trigger::after {
+        margin-left: auto;
     }
 
     /* Show nav utils in sidebar */

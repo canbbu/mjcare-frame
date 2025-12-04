@@ -31,6 +31,11 @@
     async function init() {
         await processIncludes();
         document.dispatchEvent(new CustomEvent(EVENT_NAME));
+        
+        // 섹션 로드 후 번역 적용
+        if (window.I18n && typeof window.I18n.applyTranslations === 'function') {
+            window.I18n.applyTranslations();
+        }
     }
 
     if (document.readyState === 'loading') {

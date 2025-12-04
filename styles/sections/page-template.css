@@ -1,0 +1,91 @@
+/* 공통 페이지 템플릿 스타일 */
+/* about, ceo, certification, organization 페이지에서 공통 사용 */
+
+.page-template-section {
+    padding: var(--space-xl) 0;
+    min-height: 60vh;
+}
+
+.page-template-container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.page-template-header {
+    text-align: center;
+    margin-bottom: var(--space-xl);
+}
+
+.page-template-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    margin-bottom: var(--space-lg);
+}
+
+.page-template-image-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto var(--space-xl);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    background: var(--color-surface);
+}
+
+.page-template-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+.page-template-content {
+    max-width: 900px;
+    margin: 0 auto;
+    line-height: 2;
+    color: var(--color-ink);
+    font-size: 1rem;
+}
+
+.page-template-content p {
+    margin-bottom: 1em;
+}
+
+.page-template-content strong {
+    font-weight: 600;
+    color: var(--color-ink);
+}
+
+.page-template-content ul,
+.page-template-content ol {
+    margin: 1em 0;
+    padding-left: 2em;
+}
+
+.page-template-content li {
+    margin-bottom: 0.5em;
+}
+
+.page-template-spacer {
+    height: 1.5em;
+    margin: 1.5em 0;
+}
+
+@media (max-width: 768px) {
+    .page-template-title {
+        font-size: 1.75rem;
+    }
+    
+    .page-template-content {
+        font-size: 0.95rem;
+        line-height: 1.8;
+    }
+    
+    .page-template-image-wrapper {
+        margin-bottom: var(--space-lg);
+    }
+}
+

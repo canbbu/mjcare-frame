@@ -18,6 +18,21 @@
                 'sections/about.html'
             ]
         },
+        '/ceo': {
+            sections: [
+                'sections/ceo.html'
+            ]
+        },
+        '/certification': {
+            sections: [
+                'sections/certification.html'
+            ]
+        },
+        '/organization': {
+            sections: [
+                'sections/organization.html'
+            ]
+        },
         '/business': {
             sections: [
                 'sections/business.html'

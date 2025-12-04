@@ -22,7 +22,15 @@
             <nav id="siteNav" aria-label="メインメニュー">
                 <a href="/" class="nav-logo">MIJIN COSMETICS</a>
                 <ul class="nav-main">
-                    <li><a href="/about" data-i18n="nav.about">ABOUT US</a></li>
+                    <li class="nav-dropdown">
+                        <a href="/about" class="nav-dropdown__trigger" data-i18n="nav.about">ABOUT US</a>
+                        <ul class="nav-dropdown__menu">
+                            <li><a href="/about" data-i18n="nav.aboutPage">회사소개</a></li>
+                            <li><a href="/ceo" data-i18n="nav.ceo">대표이사 인사말</a></li>
+                            <li><a href="/certification" data-i18n="nav.certification">인증 및 품질관리</a></li>
+                            <li><a href="/organization" data-i18n="nav.organization">조직도</a></li>
+                        </ul>
+                    </li>
                     <li><a href="/business" data-i18n="nav.business">BUSINESS</a></li>
                     <li><a href="/19" data-i18n="nav.production">PRODUCTION FACILITY</a></li>
                     <li><a href="/20" data-i18n="nav.brand">BRAND</a></li>

@@ -7,6 +7,10 @@ const TRANSLATIONS = {
         // 네비게이션
         nav: {
             about: 'ABOUT US',
+            aboutPage: '회사소개',
+            ceo: '대표이사 인사말',
+            certification: '인증 및 품질관리',
+            organization: '조직도',
             business: 'BUSINESS',
             production: 'PRODUCTION FACILITY',
             brand: 'BRAND',
@@ -60,7 +64,7 @@ const TRANSLATIONS = {
         },
         // About 페이지
         aboutPage: {
-            title: 'MIJIN COSMETICS.',
+            title: '회사소개',
             subtitle: '회사소개',
             companyName: '(주)미진화장품',
             paragraph1: '은, 마스크팩 연구개발 및',
@@ -85,6 +89,43 @@ const TRANSLATIONS = {
             paragraph20: '혁신적인 제품과 차별화된 가치를 제공하며,',
             paragraph21: '전 세계 고객들에게 사랑받는 브랜드로',
             paragraph22: '성장해 나갈 것입니다.'
+        },
+        // CEO 페이지
+        ceoPage: {
+            title: '대표이사 인사말',
+            content1: '안녕하세요. (주)미진화장품 대표이사 장원표입니다.',
+            content2: '1988년 설립 이래, 저희 회사는 마스크팩 전문 기업으로서',
+            content3: '고객 여러분의 아름다움과 건강한 피부를 위해',
+            content4: '최선을 다해 왔습니다.',
+            content5: '앞으로도 고객 중심의 가치를 바탕으로',
+            content6: '혁신적인 제품과 서비스를 제공하겠습니다.'
+        },
+        // Certification 페이지
+        certificationPage: {
+            title: '인증 및 품질관리',
+            content1: '(주)미진화장품은 글로벌 품질 기준을 준수하며',
+            content2: '다양한 국제 인증을 보유하고 있습니다.',
+            content3: '주요 인증:',
+            cert1: 'ISO 22716 (화장품 GMP)',
+            cert2: 'CPNP (유럽 화장품 인증)',
+            cert3: 'FDA 등록',
+            cert4: 'CGMP 인증',
+            content4: '엄격한 품질 관리 시스템을 통해',
+            content5: '고객에게 안전하고 우수한 제품을 제공합니다.'
+        },
+        // Organization 페이지
+        organizationPage: {
+            title: '조직도',
+            content1: '(주)미진화장품은 효율적인 조직 구조를 통해',
+            content2: '고객 만족과 지속적인 성장을 추구합니다.',
+            content3: '주요 부서:',
+            dept1: '연구개발본부 (R&D)',
+            dept2: '생산본부',
+            dept3: '품질관리본부',
+            dept4: '영업본부',
+            dept5: '마케팅본부',
+            content4: '각 부서의 전문성과 협력을 통해',
+            content5: '최고의 제품과 서비스를 제공합니다.'
         },
         // Solutions 섹션
         solutions: {
@@ -184,6 +225,10 @@ const TRANSLATIONS = {
     ja: {
         nav: {
             about: 'ABOUT US',
+            aboutPage: '会社紹介',
+            ceo: '代表取締役挨拶',
+            certification: '認証及び品質管理',
+            organization: '組織図',
             business: 'BUSINESS',
             production: 'PRODUCTION FACILITY',
             brand: 'BRAND',
@@ -235,7 +280,7 @@ const TRANSLATIONS = {
         },
         // About 페이지
         aboutPage: {
-            title: 'MIJIN COSMETICS.',
+            title: '会社紹介',
             subtitle: '会社紹介',
             companyName: '（株）ミジン化粧品',
             paragraph1: 'は、マスクパック研究開発および',
@@ -260,6 +305,43 @@ const TRANSLATIONS = {
             paragraph20: '革新的な製品と差別化された価値を提供し、',
             paragraph21: '世界中のお客様に愛されるブランドとして',
             paragraph22: '成長していきます。'
+        },
+        // CEO 페이지
+        ceoPage: {
+            title: '代表取締役挨拶',
+            content1: 'こんにちは。（株）ミジン化粧品代表取締役の장원표です。',
+            content2: '1988年の設立以来、当社はマスクパック専門企業として',
+            content3: 'お客様の美しさと健康な肌のために',
+            content4: '最善を尽くしてまいりました。',
+            content5: '今後もお客様中心の価値を基に',
+            content6: '革新的な製品とサービスを提供いたします。'
+        },
+        // Certification 페이지
+        certificationPage: {
+            title: '認証及び品質管理',
+            content1: '（株）ミジン化粧品はグローバル品質基準を遵守し、',
+            content2: '様々な国際認証を保有しています。',
+            content3: '主要認証：',
+            cert1: 'ISO 22716（化粧品GMP）',
+            cert2: 'CPNP（欧州化粧品認証）',
+            cert3: 'FDA登録',
+            cert4: 'CGMP認証',
+            content4: '厳格な品質管理システムを通じて',
+            content5: 'お客様に安全で優れた製品を提供します。'
+        },
+        // Organization 페이지
+        organizationPage: {
+            title: '組織図',
+            content1: '（株）ミジン化粧品は効率的な組織構造を通じて',
+            content2: 'お客様満足と持続的な成長を追求します。',
+            content3: '主要部門：',
+            dept1: '研究開発本部（R&D）',
+            dept2: '生産本部',
+            dept3: '品質管理本部',
+            dept4: '営業本部',
+            dept5: 'マーケティング本部',
+            content4: '各部門の専門性と協力を通じて',
+            content5: '最高の製品とサービスを提供します。'
         },
         solutions: {
             title1: 'トレンドに合わせた',
@@ -356,6 +438,10 @@ const TRANSLATIONS = {
     en: {
         nav: {
             about: 'ABOUT US',
+            aboutPage: 'About Us',
+            ceo: 'CEO Message',
+            certification: 'Certification & Quality',
+            organization: 'Organization',
             business: 'BUSINESS',
             production: 'PRODUCTION FACILITY',
             brand: 'BRAND',
@@ -407,7 +493,7 @@ const TRANSLATIONS = {
         },
         // About Page
         aboutPage: {
-            title: 'MIJIN COSMETICS.',
+            title: 'Company Introduction',
             subtitle: 'Company Introduction',
             companyName: 'MIJIN COSMETICS Co., Ltd.',
             paragraph1: 'started as a mask pack R&D and',
@@ -432,6 +518,43 @@ const TRANSLATIONS = {
             paragraph20: 'we will continue to provide innovative products and differentiated value,',
             paragraph21: 'growing into a brand loved by',
             paragraph22: 'customers worldwide.'
+        },
+        // CEO 페이지
+        ceoPage: {
+            title: 'CEO Message',
+            content1: 'Hello. I am Jang Won Pyo, CEO of MIJIN COSMETICS Co., Ltd.',
+            content2: 'Since our establishment in 1988, our company has been a mask pack specialist',
+            content3: 'dedicated to your beauty and healthy skin,',
+            content4: 'doing our best to serve you.',
+            content5: 'Moving forward, based on customer-centered values,',
+            content6: 'we will continue to provide innovative products and services.'
+        },
+        // Certification 페이지
+        certificationPage: {
+            title: 'Certification & Quality',
+            content1: 'MIJIN COSMETICS Co., Ltd. complies with global quality standards',
+            content2: 'and holds various international certifications.',
+            content3: 'Main Certifications:',
+            cert1: 'ISO 22716 (Cosmetic GMP)',
+            cert2: 'CPNP (European Cosmetic Certification)',
+            cert3: 'FDA Registration',
+            cert4: 'CGMP Certification',
+            content4: 'Through strict quality management systems,',
+            content5: 'we provide safe and excellent products to our customers.'
+        },
+        // Organization 페이지
+        organizationPage: {
+            title: 'Organization',
+            content1: 'MIJIN COSMETICS Co., Ltd. pursues customer satisfaction',
+            content2: 'and sustainable growth through efficient organizational structure.',
+            content3: 'Main Departments:',
+            dept1: 'R&D Headquarters',
+            dept2: 'Production Headquarters',
+            dept3: 'Quality Control Headquarters',
+            dept4: 'Sales Headquarters',
+            dept5: 'Marketing Headquarters',
+            content4: 'Through the expertise and collaboration of each department,',
+            content5: 'we provide the best products and services.'
         },
         solutions: {
             title1: 'Customized Solutions',
